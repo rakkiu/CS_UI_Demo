@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { UploadCloud, CheckCircle, ShieldCheck, FileText } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { PenTool, Download } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Home, LayoutGrid, ClipboardSignature, BellRing, LogOut, Package, DollarSign, Smartphone, Menu, X, Monitor, Settings, Map } from 'lucide-react';
 
 export default function OperatorLayout({ children, activeTab }: { children: React.ReactNode, activeTab: string }) {
@@ -173,9 +174,9 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
               </select>
 
               <div className="hidden sm:flex items-center bg-black border border-gray-700 rounded px-1 py-1">
-                <button onClick={() => setScale(s => Math.max(0.5, s - 0.1))} className="px-2 text-gray-400 hover:text-white font-bold">-</button>
+                <button onClick={() => setScale((s: number) => Math.max(0.5, s - 0.1))} className="px-2 text-gray-400 hover:text-white font-bold">-</button>
                 <span className="text-xs font-bold w-12 text-center text-[#f4cf9c]">{Math.round(scale * 100)}%</span>
-                <button onClick={() => setScale(s => Math.min(1.5, s + 0.1))} className="px-2 text-gray-400 hover:text-white font-bold">+</button>
+                <button onClick={() => setScale((s: number) => Math.min(1.5, s + 0.1))} className="px-2 text-gray-400 hover:text-white font-bold">+</button>
               </div>
             </div>
             

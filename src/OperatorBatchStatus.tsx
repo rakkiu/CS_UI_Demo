@@ -1,5 +1,5 @@
-import React from 'react';
-import { Clock, CheckCircle, Package, DollarSign, Users, Bell } from 'lucide-react';
+
+import { Package, DollarSign, Users, Bell } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 
 export default function OperatorBatchStatus() {

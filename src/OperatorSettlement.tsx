@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { DollarSign, CheckCircle, PieChart, TrendingUp, ArrowLeft, ArrowRight, FileCheck } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 

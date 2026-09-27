@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { PlusCircle, Activity, Droplets, AlertCircle, ChevronRight } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import OperatorLayout from './OperatorLayout';

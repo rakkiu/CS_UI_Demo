@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowLeft, Briefcase, FileText, Users, DollarSign, ExternalLink, AlertTriangle, ArrowRight } from 'lucide-react';
+
+import { ArrowLeft, Briefcase, FileText, Users, ExternalLink, AlertTriangle, ArrowRight } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 
 export default function OperatorBatchDetail() {

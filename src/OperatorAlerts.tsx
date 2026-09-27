@@ -1,5 +1,5 @@
-import React from 'react';
-import { AlertTriangle, Clock, CheckCircle2, ChevronRight, Droplets, ArrowRight } from 'lucide-react';
+
+import { AlertTriangle, Clock, CheckCircle2, Droplets, ArrowRight } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 
 export default function OperatorAlerts() {

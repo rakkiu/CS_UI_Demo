@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { QrCode, PlusCircle, Box, PackageCheck, UploadCloud, ArrowLeft, ArrowRight, Package } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 

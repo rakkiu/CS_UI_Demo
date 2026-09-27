@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import { useState } from 'react';
 import { ChevronRight, ChevronLeft, X, Activity, Droplets, Thermometer } from 'lucide-react';
 import OperatorLayout from './OperatorLayout';
 
@@ -107,11 +108,11 @@ export default function OperatorFarmMap() {
               Đang hiển thị ô <strong className="text-[#171717]">{(page - 1) * BOXES_PER_PAGE + 1}</strong> đến <strong className="text-[#171717]">{Math.min(page * BOXES_PER_PAGE, currentBatch.totalBoxes)}</strong> / {currentBatch.totalBoxes}
             </span>
             <div className="flex items-center gap-3">
-              <button disabled={page === 1} onClick={() => setPage(p => p - 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-gray-50">
+              <button disabled={page === 1} onClick={() => setPage((p: number) => p - 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-gray-50">
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <span className="text-sm font-extrabold text-[#7d4b1a] px-2">{page} <span className="text-gray-400">/</span> {totalPages}</span>
-              <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-gray-50">
+              <button disabled={page === totalPages} onClick={() => setPage((p: number) => p + 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-gray-50">
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
