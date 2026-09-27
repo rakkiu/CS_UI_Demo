@@ -78,7 +78,7 @@ function App() {
           </div>
           <div className="hidden items-center gap-3 lg:flex">
             <button className="pill-button border border-white/50 px-5 py-2 text-[11px]" onClick={() => openDialog('login')}>ĐĂNG NHẬP</button>
-            <button className="pill-button bg-white px-5 py-2 text-[11px] text-black" onClick={() => openDialog('contact')}>ĐĂNG KÝ</button>
+            <a className="pill-button bg-white px-5 py-2 text-[11px] text-black" href="/dang-ky">ĐĂNG KÝ</a>
           </div>
           <button className="rounded-full border border-white/50 px-4 py-2 text-xs font-bold lg:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="mobile-menu">
             {menuOpen ? 'ĐÓNG' : 'MENU'}
@@ -91,7 +91,7 @@ function App() {
               {navItems.map((item) => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="py-2 text-xs font-semibold tracking-wider">{item.label}</a>)}
               <div className="mt-2 flex gap-2">
                 <button className="pill-button border border-white/40 px-4 py-2 text-xs" onClick={() => openDialog('login')}>ĐĂNG NHẬP</button>
-                <button className="pill-button bg-white px-4 py-2 text-xs text-black" onClick={() => openDialog('contact')}>ĐĂNG KÝ</button>
+                <a className="pill-button bg-white px-4 py-2 text-xs text-black" href="/dang-ky">ĐĂNG KÝ</a>
               </div>
             </div>
           </div>
@@ -266,7 +266,7 @@ function App() {
         <section id="dang-ky" className="bg-[#916026] px-4 pb-12 pt-20 text-white">
           <div className="mx-auto flex max-w-[960px] flex-col items-center justify-center gap-5 text-center md:flex-row">
             <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">Đăng ký để bắt đầu đầu tư ngay hôm nay</h2>
-            <button onClick={() => openDialog('contact')} className="pill-button shrink-0 bg-black px-8 py-3 text-xs">ĐĂNG KÝ</button>
+            <a href="/dang-ky" className="pill-button shrink-0 bg-black px-8 py-3 text-xs">ĐĂNG KÝ</a>
           </div>
         </section>
       </div>
@@ -297,7 +297,7 @@ function App() {
             <h3 className="footer-title">Ứng Dụng</h3>
             <div className="mt-4 flex flex-col items-start gap-2">
               <button onClick={() => openDialog('login')} className="pill-button w-28 bg-black py-2 text-[11px] text-white">ĐĂNG NHẬP</button>
-              <button onClick={() => openDialog('contact')} className="pill-button w-28 bg-black py-2 text-[11px] text-white">ĐĂNG KÝ</button>
+              <a href="/dang-ky" className="pill-button w-28 bg-black py-2 text-[11px] text-white">ĐĂNG KÝ</a>
             </div>
           </div>
         </div>
