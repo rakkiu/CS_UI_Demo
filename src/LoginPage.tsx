@@ -13,10 +13,6 @@ function LoginPage() {
 
   const signIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!email || !password) {
-      setMessage('Vui lòng nhập email và mật khẩu.')
-      return
-    }
     saveSession()
     window.location.assign('/')
   }
