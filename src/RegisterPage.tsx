@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { SiteFooter, SiteHeader } from './SiteChrome'
 
 const asset = (name: string) => `/assets/${name}`
 
@@ -56,7 +57,9 @@ function RegisterPage() {
   }
 
   return (
-    <main className="register-page">
+    <>
+      <SiteHeader />
+      <main className="register-page">
       <section className="register-card" aria-labelledby="register-title" data-node-id="67:2097">
         <header className="register-brand">
           <a href="/" className="register-logo" aria-label="CrabShare, về trang chủ">
@@ -126,9 +129,11 @@ function RegisterPage() {
           {message && <p className={message.startsWith('Tài khoản') ? 'register-success' : 'register-error'} role="status">{message}</p>}
         </form>
 
-        <p className="register-signin">Do you have an existing account? <a href="/">Sign in</a></p>
+        <p className="register-signin">Do you have an existing account? <a href="/dang-nhap">Sign in</a></p>
       </section>
-    </main>
+      </main>
+      <SiteFooter />
+    </>
   )
 }
 
