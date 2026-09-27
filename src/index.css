@@ -252,6 +252,112 @@ footer a:hover, footer button:hover { color: #916026; }
 .login-signup { margin: -5px 0 0; color: #374151; font-size: 13px; line-height: 19.5px; text-align: center; }
 .login-signup a { color: #855123; font-weight: 500; }
 
+/* ── Login demo banner ── */
+.login-demo-banner {
+  margin-top: 24px;
+  padding: 18px 20px 16px;
+  border: 1px solid #e6d5c0;
+  border-radius: 6px;
+  background: #fff8f0;
+}
+.login-demo-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.login-demo-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: #855123;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  animation: demo-pulse 2.4s ease-in-out infinite;
+}
+@keyframes demo-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .72; }
+}
+.login-demo-desc {
+  margin: 0;
+  color: #71685d;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.login-demo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.login-demo-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 4px;
+  text-align: left;
+  transition: transform .15s, box-shadow .15s, background .15s;
+  cursor: pointer;
+}
+.login-demo-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(133,81,35,.18);
+}
+.login-demo-btn:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+.login-demo-btn--outline {
+  border: 1.5px solid #855123;
+  background: #fff;
+  color: #855123;
+}
+.login-demo-btn--outline:hover:not(:disabled) {
+  background: #fff7ed;
+}
+.login-demo-btn--filled {
+  border: 1.5px solid #855123;
+  background: #855123;
+  color: #fff;
+}
+.login-demo-btn--filled:hover:not(:disabled) {
+  background: #6e4018;
+}
+.login-demo-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.login-demo-btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.login-demo-btn-text strong {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.login-demo-btn-text small {
+  font-size: 10.5px;
+  font-weight: 400;
+  opacity: .8;
+  line-height: 1.3;
+}
+.login-demo-status {
+  margin: 10px 0 0;
+  color: #855123;
+  font-size: 11.5px;
+  text-align: center;
+  animation: demo-pulse 1.2s ease-in-out infinite;
+}
+
 .store-page { min-height: 100vh; background: #fffdf9; color: #171717; font-size: 12px; }
 .store-nav { display:flex; height:80px; align-items:center; justify-content:space-between; padding:0 24px; background:#171513; color:#fff; }
 .store-brand { display:flex; align-items:center; gap:10px; color:#fff; font-size:11px; font-weight:800; letter-spacing:1.5px; line-height:1.1; }.store-brand img{padding:7px;background:#855123}
