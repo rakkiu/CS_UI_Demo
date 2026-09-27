@@ -125,20 +125,6 @@ function App() {
         </div>
       </header>
 
-      <section className="border-b border-gray-100 bg-white" aria-label="Truyền thông và đối tác">
-        <div className="page-container flex min-h-[105px] flex-col items-center justify-center gap-6 py-5 lg:flex-row lg:justify-between">
-          <span className="shrink-0 border-gray-200 pr-8 text-[12px] font-bold tracking-[0.05em] text-gray-500 lg:border-r">TRUYỀN THÔNG & ĐỐI TÁC</span>
-          <div className="flex w-full flex-wrap items-center justify-between gap-x-6 gap-y-4 opacity-80">
-            <span className="font-serif text-xl font-bold">Times<span className="ml-0.5 font-sans text-xs font-extrabold text-red-600">LIVE</span></span>
-            <span className="text-sm font-extrabold tracking-tight text-blue-900">BUSINESS<span className="font-normal text-cyan-600">TECH</span></span>
-            <span className="text-2xl font-extrabold tracking-tight text-red-600">CNN</span>
-            <span className="flex gap-[2px] text-xs font-bold text-white"><b className="bg-black px-1.5 py-0.5">B</b><b className="bg-black px-1.5 py-0.5">B</b><b className="bg-black px-1.5 py-0.5">C</b></span>
-            <span className="text-base font-bold tracking-widest text-blue-900">SABC<span className="ml-1 inline-block h-2 w-2 rounded-full bg-yellow-400" /></span>
-            <span className="text-xl font-extrabold text-red-600">TED<span className="font-light text-black">x</span></span>
-          </div>
-        </div>
-      </section>
-
       <section id="quy-trinh" className="bg-[#fff1e0] py-20 md:py-24">
         <div className="page-container grid items-center gap-12 lg:grid-cols-2">
           <div>
