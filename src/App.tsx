@@ -4,7 +4,7 @@ const asset = (name: string) => `/assets/${name}`
 
 const navItems = [
   { label: 'ĐẦU TƯ', href: '#goi-dau-tu', dropdown: true },
-  { label: 'CỬA HÀNG', href: '#ung-dung' },
+  { label: 'CỬA HÀNG', href: '/cua-hang' },
   { label: 'THEO DÕI SẢN XUẤT', href: '#quy-trinh' },
   { label: 'VỀ CHÚNG TÔI', href: '#ve-chung-toi', dropdown: true },
   { label: 'LIÊN HỆ', href: '#lien-he' },
