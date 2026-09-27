@@ -12,7 +12,7 @@ export default function OperatorKyc() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cột 1: CCCD / Chụp mặt */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-8 rounded-full bg-[#f0fdf4] text-[#15803d] flex items-center justify-center border border-[#bbf7d0]">
               <CheckCircle className="w-5 h-5" />
@@ -22,15 +22,15 @@ export default function OperatorKyc() {
           
           <div className="space-y-4">
             <div className="flex gap-4">
-              <div className="w-1/2 aspect-[1.6] bg-gray-100 rounded-md border border-gray-200 flex items-center justify-center relative overflow-hidden">
+              <div className="w-1/2 aspect-[1.6] bg-gray-100 rounded-md border border-[#e8dccb] flex items-center justify-center relative overflow-hidden">
                 <img src="/assets/imgQuestionCardSection.png" className="opacity-40 object-cover w-full h-full absolute" alt="CCCD" />
-                <span className="text-xs font-bold text-gray-600 relative z-10 bg-white/80 px-2 py-1 rounded">Mặt trước CCCD</span>
+                <span className="text-xs font-bold text-gray-600 relative z-10 bg-[#faf6f0]/80 px-2 py-1 rounded">Mặt trước CCCD</span>
               </div>
-              <div className="w-1/2 aspect-[1.6] bg-gray-100 rounded-md border border-gray-200 flex items-center justify-center">
+              <div className="w-1/2 aspect-[1.6] bg-gray-100 rounded-md border border-[#e8dccb] flex items-center justify-center">
                 <span className="text-xs font-bold text-gray-400">Mặt sau CCCD</span>
               </div>
             </div>
-            <div className="p-4 bg-gray-50 rounded text-sm text-gray-600 border border-gray-100">
+            <div className="p-4 bg-[#f4efe8] rounded text-sm text-gray-600 border border-[#f0e8dc]">
               <p><strong>Họ và tên:</strong> NGUYỄN VĂN A</p>
               <p><strong>Số CCCD:</strong> 079200123456</p>
               <p><strong>Liveness (Face):</strong> <span className="text-[#15803d] font-bold">Khớp 99.8%</span></p>
@@ -39,7 +39,7 @@ export default function OperatorKyc() {
         </div>
 
         {/* Cột 2: Giấy phép kinh doanh / Farm */}
-        <div className="bg-white p-6 rounded-lg border border-[#f4cf9c] shadow-sm ring-1 ring-[#fff8ef]">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#f4cf9c] shadow-sm ring-1 ring-[#fff8ef]">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-8 rounded-full bg-[#fff8ef] text-[#b45309] flex items-center justify-center border border-[#f4cf9c]">
               <ShieldCheck className="w-5 h-5" />
@@ -58,7 +58,7 @@ export default function OperatorKyc() {
 
             <div>
               <label className="block text-sm font-bold text-[#171717] mb-2">Chứng nhận VietGAP / Cở sở đủ điều kiện</label>
-              <div className="border-2 border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors">
+              <div className="border-2 border-dashed border-gray-300 bg-[#f4efe8] rounded-lg p-6 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors">
                 <UploadCloud className="w-6 h-6 mb-2" />
                 <span className="text-xs font-bold">Tải lên Chứng nhận</span>
               </div>

@@ -22,8 +22,8 @@ export default function OperatorHarvest() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {readyBatches.map(b => (
-            <div key={b.id} onClick={() => window.location.href=`/operator/harvest?batchId=${b.id}`} className="bg-white p-6 rounded-lg border border-gray-200 hover:border-[#7d4b1a] shadow-sm cursor-pointer transition-all hover:shadow-md">
-              <div className="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
+            <div key={b.id} onClick={() => window.location.href=`/operator/harvest?batchId=${b.id}`} className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] hover:border-[#7d4b1a] shadow-sm cursor-pointer transition-all hover:shadow-md">
+              <div className="flex justify-between items-start mb-4 border-b border-[#f0e8dc] pb-4">
                 <div>
                   <h2 className="text-lg font-extrabold text-[#7d4b1a]">{b.id}</h2>
                   <p className="text-sm font-bold text-gray-500">{b.type}</p>
@@ -92,14 +92,14 @@ export default function OperatorHarvest() {
           <div>
             <label className="block text-sm font-bold text-[#171717] mb-2">Cua Lột Loại 1 (200g+)</label>
             <div className="flex items-center gap-2">
-              <input type="number" defaultValue={850000} className="w-full p-2 border border-[#f4cf9c] bg-white rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
+              <input type="number" defaultValue={850000} className="w-full p-2 border border-[#f4cf9c] bg-[#faf6f0] rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
               <span className="text-sm font-bold text-gray-500">VND/kg</span>
             </div>
           </div>
           <div>
             <label className="block text-sm font-bold text-[#171717] mb-2">Cua Lột Loại 2 (150g+)</label>
             <div className="flex items-center gap-2">
-              <input type="number" defaultValue={650000} className="w-full p-2 border border-[#f4cf9c] bg-white rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
+              <input type="number" defaultValue={650000} className="w-full p-2 border border-[#f4cf9c] bg-[#faf6f0] rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
               <span className="text-sm font-bold text-gray-500">VND/kg</span>
             </div>
           </div>
@@ -114,8 +114,8 @@ export default function OperatorHarvest() {
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Cột 1: Form Sinh QR */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col">
-          <h2 className="text-base font-extrabold text-[#7d4b1a] mb-5 border-b border-gray-100 pb-3">1. Khai báo & Gắn tem QR</h2>
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex flex-col">
+          <h2 className="text-base font-extrabold text-[#7d4b1a] mb-5 border-b border-[#f0e8dc] pb-3">1. Khai báo & Gắn tem QR</h2>
           <p className="text-xs text-gray-500 mb-4">Sinh tem truy xuất nguồn gốc từng con cua lúc bắt ra khỏi hộp.</p>
           <div className="space-y-4">
             <div>
@@ -124,7 +124,7 @@ export default function OperatorHarvest() {
             </div>
             <div>
               <label className="block text-sm font-bold text-[#171717] mb-2">Phân loại chất lượng</label>
-              <select className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium bg-white">
+              <select className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium bg-[#faf6f0]">
                 <option>Loại 1 (Tuyệt hảo - 200g+)</option>
                 <option>Loại 2 (Tiêu chuẩn - 150g+)</option>
               </select>
@@ -140,13 +140,13 @@ export default function OperatorHarvest() {
         </div>
 
         {/* Cột 2: Đóng hàng giao khách */}
-        <div className="bg-white p-6 rounded-lg border border-[#7d4b1a] shadow-sm flex flex-col ring-1 ring-[#fff8ef]">
-          <h2 className="text-base font-extrabold text-[#171717] mb-5 border-b border-gray-100 pb-3">2. Đóng Hàng Giao Khách</h2>
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#7d4b1a] shadow-sm flex flex-col ring-1 ring-[#fff8ef]">
+          <h2 className="text-base font-extrabold text-[#171717] mb-5 border-b border-[#f0e8dc] pb-3">2. Đóng Hàng Giao Khách</h2>
           <p className="text-xs text-gray-500 mb-4">Xử lý đơn bán lẻ từ nền tảng. Khách mua cua, Trại đóng gói gửi Ship.</p>
           <div className="space-y-4 flex-1">
             <div>
               <label className="block text-sm font-bold text-[#171717] mb-2">Mã Đơn / Tên Khách</label>
-              <input type="text" defaultValue="ORD-9982 (Anh Tuấn)" readOnly className="w-full p-2 border border-gray-200 bg-gray-50 rounded outline-none text-sm font-bold text-[#7d4b1a]" />
+              <input type="text" defaultValue="ORD-9982 (Anh Tuấn)" readOnly className="w-full p-2 border border-[#e8dccb] bg-[#f4efe8] rounded outline-none text-sm font-bold text-[#7d4b1a]" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -160,7 +160,7 @@ export default function OperatorHarvest() {
             </div>
             <div>
               <label className="block text-sm font-bold text-[#171717] mb-2">Hình ảnh đóng thùng (Tình trạng cua)</label>
-              <div className="border border-dashed border-gray-300 bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors">
+              <div className="border border-dashed border-gray-300 bg-[#f4efe8] rounded-lg p-4 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors">
                 <UploadCloud className="w-5 h-5 mb-1" />
                 <span className="text-[10px] font-bold">Chụp & Tải ảnh lên</span>
               </div>
@@ -172,16 +172,16 @@ export default function OperatorHarvest() {
         </div>
 
         {/* Cột 3: Danh sách QR */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col">
-          <div className="flex justify-between items-center mb-5 border-b border-gray-100 pb-3">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex flex-col">
+          <div className="flex justify-between items-center mb-5 border-b border-[#f0e8dc] pb-3">
             <h2 className="text-base font-extrabold text-[#171717]">Danh sách mã QR đã sinh</h2>
             <span className="text-sm font-bold text-[#15803d]">{harvestedItems.length} mã</span>
           </div>
           <div className="space-y-3 flex-1">
             {harvestedItems.map((item, idx) => (
-              <div key={idx} className="flex flex-col p-3 border border-gray-100 rounded bg-gray-50 hover:border-gray-300 transition-colors">
+              <div key={idx} className="flex flex-col p-3 border border-[#f0e8dc] rounded bg-[#f4efe8] hover:border-gray-300 transition-colors">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="p-1.5 bg-white rounded border border-gray-200 text-[#171717] shadow-sm">
+                  <div className="p-1.5 bg-[#faf6f0] rounded border border-[#e8dccb] text-[#171717] shadow-sm">
                     <QrCode className="w-5 h-5" />
                   </div>
                   <div>
@@ -191,7 +191,7 @@ export default function OperatorHarvest() {
                 </div>
               </div>
             ))}
-            <div className="mt-4 flex justify-center border-2 border-dashed border-gray-200 p-4 rounded-lg bg-gray-50">
+            <div className="mt-4 flex justify-center border-2 border-dashed border-[#e8dccb] p-4 rounded-lg bg-[#f4efe8]">
               <div className="text-center">
                 <Box className="w-6 h-6 text-gray-400 mx-auto mb-1" />
                 <p className="text-[10px] font-bold text-gray-400">Scan QR để đối chiếu</p>

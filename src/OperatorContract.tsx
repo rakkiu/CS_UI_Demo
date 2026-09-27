@@ -34,13 +34,13 @@ export default function OperatorContract() {
           <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Ký kết Hợp đồng Hợp tác</h1>
           <p className="text-sm text-gray-500 mt-1">Lô BATCH-2026-11A (Cua Lột 11A)</p>
         </div>
-        <button className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2.5 rounded text-sm font-bold transition-colors shadow-sm">
+        <button className="flex items-center gap-2 bg-[#faf6f0] border border-gray-300 text-gray-700 hover:bg-[#f4efe8] px-4 py-2.5 rounded text-sm font-bold transition-colors shadow-sm">
           <Download className="w-4 h-4" /> Tải bản PDF
         </button>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white p-4 sm:p-8 rounded-lg border border-gray-200 shadow-sm h-[600px] overflow-y-auto">
+        <div className="lg:col-span-2 bg-[#faf6f0] p-4 sm:p-8 rounded-lg border border-[#e8dccb] shadow-sm h-[600px] overflow-y-auto">
           {/* Mock Document */}
           <div className="max-w-xl mx-auto space-y-6 text-sm text-gray-800 leading-relaxed font-serif relative">
             
@@ -80,7 +80,7 @@ export default function OperatorContract() {
                   <tr><td className="p-2 border border-gray-300">Trần Trọng A</td><td className="p-2 border border-gray-300 font-bold">30%</td><td className="p-2 border border-gray-300">22.500.000 ₫</td></tr>
                   <tr><td className="p-2 border border-gray-300">Lê Thị B</td><td className="p-2 border border-gray-300 font-bold">50%</td><td className="p-2 border border-gray-300">37.500.000 ₫</td></tr>
                   <tr><td className="p-2 border border-gray-300">Phạm Văn C</td><td className="p-2 border border-gray-300 font-bold">20%</td><td className="p-2 border border-gray-300">15.000.000 ₫</td></tr>
-                  <tr className="bg-gray-50 font-bold"><td className="p-2 border border-gray-300">Tổng cộng (100%)</td><td className="p-2 border border-gray-300">100%</td><td className="p-2 border border-gray-300">75.000.000 ₫</td></tr>
+                  <tr className="bg-[#f4efe8] font-bold"><td className="p-2 border border-gray-300">Tổng cộng (100%)</td><td className="p-2 border border-gray-300">100%</td><td className="p-2 border border-gray-300">75.000.000 ₫</td></tr>
                 </tbody>
               </table>
             </div>
@@ -148,7 +148,7 @@ export default function OperatorContract() {
               <ShieldCheck className="w-10 h-10 text-[#15803d] mx-auto mb-2" />
               <p className="font-bold text-[#15803d]">Hợp đồng đã có hiệu lực</p>
               <p className="text-xs text-gray-600 mt-1">Văn bản đã được ký số hợp lệ và lưu trữ trên hệ thống Blockchain.</p>
-              <button onClick={() => window.location.href='/operator/batch'} className="w-full mt-4 bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-gray-50 transition-colors">
+              <button onClick={() => window.location.href='/operator/batch'} className="w-full mt-4 bg-[#faf6f0] border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-[#f4efe8] transition-colors">
                 Trở về Danh sách Lô
               </button>
             </div>
@@ -159,7 +159,7 @@ export default function OperatorContract() {
       {/* VIETTEL CA MODAL */}
       {showViettelCA && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
+          <div className="bg-[#faf6f0] rounded-xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
             <div className="bg-red-600 p-4 flex items-center justify-between text-white">
               <div className="flex items-center gap-3">

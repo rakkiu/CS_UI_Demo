@@ -22,16 +22,16 @@ export default function OperatorSettlement() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {settlementBatches.map(b => (
-            <div key={b.id} onClick={() => window.location.href=`/operator/settlement?batchId=${b.id}`} className="bg-white p-6 rounded-lg border border-gray-200 hover:border-[#7d4b1a] shadow-sm cursor-pointer transition-all hover:shadow-md relative overflow-hidden">
+            <div key={b.id} onClick={() => window.location.href=`/operator/settlement?batchId=${b.id}`} className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] hover:border-[#7d4b1a] shadow-sm cursor-pointer transition-all hover:shadow-md relative overflow-hidden">
               {b.action && (
                 <div className="absolute top-0 right-0 bg-[#b42318] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">CẦN XỬ LÝ</div>
               )}
-              <div className="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
+              <div className="flex justify-between items-start mb-4 border-b border-[#f0e8dc] pb-4">
                 <div>
                   <h2 className="text-lg font-extrabold text-[#7d4b1a]">{b.id}</h2>
                   <p className="text-sm font-bold text-gray-500">{b.name}</p>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${b.action ? 'bg-[#fff8ef] text-[#7d4b1a] border-[#f4cf9c]' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
+                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${b.action ? 'bg-[#fff8ef] text-[#7d4b1a] border-[#f4cf9c]' : 'bg-gray-100 text-gray-500 border-[#e8dccb]'}`}>
                   {b.status}
                 </span>
               </div>
@@ -45,13 +45,13 @@ export default function OperatorSettlement() {
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Chi phí / Vốn ứng</p>
                   <p className="font-extrabold text-[#b42318] text-lg">-{b.cost} <span className="text-xs font-medium">₫</span></p>
                 </div>
-                <div className="col-span-2 bg-gray-50 p-2 rounded flex justify-between items-center border border-gray-100">
+                <div className="col-span-2 bg-[#f4efe8] p-2 rounded flex justify-between items-center border border-[#f0e8dc]">
                   <p className="text-xs font-bold text-gray-600 uppercase tracking-wider">Lợi nhuận gộp</p>
                   <p className="font-extrabold text-[#171717]">{b.profit} <span className="text-xs font-medium">₫</span></p>
                 </div>
               </div>
 
-              <button className={`w-full mt-5 py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 transition-colors ${b.action ? 'bg-[#171717] text-white hover:bg-[#333]' : 'bg-white border border-gray-200 text-gray-500'}`}>
+              <button className={`w-full mt-5 py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 transition-colors ${b.action ? 'bg-[#171717] text-white hover:bg-[#333]' : 'bg-[#faf6f0] border border-[#e8dccb] text-gray-500'}`}>
                 <FileCheck className="w-4 h-4" /> Xem Bảng Đối Soát <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -73,7 +73,7 @@ export default function OperatorSettlement() {
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tổng Doanh thu Bán ra</p>
             <h3 className="text-2xl font-extrabold text-[#15803d]">125.500.000 ₫</h3>
@@ -83,7 +83,7 @@ export default function OperatorSettlement() {
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-[#b42318] uppercase tracking-wider mb-1">Chi phí Sản xuất (Đã ứng)</p>
             <h3 className="text-2xl font-extrabold text-[#b42318]">- 50.000.000 ₫</h3>
@@ -98,17 +98,17 @@ export default function OperatorSettlement() {
             <p className="text-xs font-bold text-[#7d4b1a] uppercase tracking-wider mb-1">Lợi nhuận gộp</p>
             <h3 className="text-2xl font-extrabold text-[#7d4b1a]">75.500.000 ₫</h3>
           </div>
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#7d4b1a] shadow-sm">
+          <div className="w-12 h-12 bg-[#faf6f0] rounded-full flex items-center justify-center text-[#7d4b1a] shadow-sm">
             <PieChart className="w-5 h-5" />
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
-          <h2 className="text-base font-extrabold text-[#171717] mb-6 border-b border-gray-100 pb-3">Bảng phân bổ Doanh thu (Hợp đồng 60/40)</h2>
+        <div className="bg-[#faf6f0] p-8 rounded-lg border border-[#e8dccb] shadow-sm">
+          <h2 className="text-base font-extrabold text-[#171717] mb-6 border-b border-[#f0e8dc] pb-3">Bảng phân bổ Doanh thu (Hợp đồng 60/40)</h2>
           <div className="space-y-5 text-sm">
-            <div className="flex justify-between items-center bg-gray-50 p-3 rounded border border-gray-100">
+            <div className="flex justify-between items-center bg-[#f4efe8] p-3 rounded border border-[#f0e8dc]">
               <span className="text-gray-600 font-medium">Nhà Đầu Tư & Nền tảng (40%)</span>
               <span className="font-bold text-[#171717]">30.200.000 ₫</span>
             </div>
@@ -123,7 +123,7 @@ export default function OperatorSettlement() {
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-center">
+        <div className="bg-[#faf6f0] p-8 rounded-lg border border-[#e8dccb] shadow-sm flex flex-col justify-center">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-[#f0fdf4] border border-[#bbf7d0] rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-[#15803d]" />

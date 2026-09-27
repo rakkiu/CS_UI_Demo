@@ -23,7 +23,7 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
   const getTabClass = (tabName: string) => 
     activeTab === tabName 
       ? "flex items-center gap-3 px-3 py-2.5 bg-[#fff8ef] text-[#7d4b1a] rounded-md font-bold text-sm shadow-sm"
-      : "flex items-center gap-3 px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-md font-medium text-sm transition-colors";
+      : "flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-[#d4b99d] rounded-md font-medium text-sm transition-colors";
 
   const navLinks = [
     { id: 'dashboard', href: '/operator', icon: Home, label: 'Tổng quan' },
@@ -35,10 +35,10 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
   ];
 
   return (
-    <div className="min-h-screen bg-[#fcfbf9] text-[#171717] flex flex-col md:flex-row relative pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#f4efe8] text-[#171717] flex flex-col md:flex-row relative pb-16 md:pb-0">
       
       {/* ---------------- MOBILE HEADER ---------------- */}
-      <header className="md:hidden flex items-center justify-between bg-white h-14 px-4 border-b border-gray-200 sticky top-0 z-40 shadow-sm shrink-0">
+      <header className="md:hidden flex items-center justify-between bg-[#e8dccb] h-14 px-4 border-b border-[#e8dccb] sticky top-0 z-40 shadow-sm shrink-0">
         <div className="flex items-center gap-2">
           <div className="grid w-8 h-8 place-items-center rounded-full bg-[#7d4b1a]">
             <img src="/assets/imgRegisterCrab.svg" alt="Crab" className="w-5 h-5" style={{filter: 'brightness(0) invert(1)'}} onError={(e) => e.currentTarget.style.display = 'none'} />
@@ -57,7 +57,7 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
       </header>
 
       {/* ---------------- MOBILE BOTTOM TAB BAR (APP STYLE) ---------------- */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#e8dccb] border-t border-[#e8dccb] flex justify-around items-center h-16 z-50 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
         <a href="/operator" className={`flex flex-col items-center justify-center w-full h-full ${activeTab === 'dashboard' ? 'text-[#7d4b1a]' : 'text-gray-400'}`}>
           <Home className={`w-5 h-5 ${activeTab === 'dashboard' ? 'fill-current' : ''}`} />
           <span className="text-[10px] font-bold mt-1">Trang chủ</span>
@@ -84,8 +84,8 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40 flex justify-end pb-16">
           <div className="absolute inset-[-100px] bg-black/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)}></div>
-          <div className="relative w-[260px] bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 rounded-l-2xl overflow-hidden mt-14 border-t border-gray-100">
-            <div className="p-5 flex items-center justify-between border-b border-gray-100 bg-[#fcfbf9]">
+          <div className="relative w-[260px] bg-[#e8dccb] h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 rounded-l-2xl overflow-hidden mt-14 border-t border-[#f0e8dc]">
+            <div className="p-5 flex items-center justify-between border-b border-[#f0e8dc] bg-[#f4efe8]">
               <strong className="text-[#7d4b1a] font-extrabold text-lg">TÍNH NĂNG KHÁC</strong>
               <button onClick={() => setMobileMenuOpen(false)} className="bg-gray-200 rounded-full p-1"><X className="w-5 h-5 text-gray-700" /></button>
             </div>
@@ -93,7 +93,7 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
               <a href="/operator/kyc" className={getTabClass('kyc')}><ClipboardSignature className="w-5 h-5" />Hồ sơ & eKYC</a>
               <a href="/operator/settlement" className={getTabClass('settlement')}><DollarSign className="w-5 h-5" />Đối soát Doanh thu</a>
               
-              <div className="border-t border-gray-100 my-4 pt-4"></div>
+              <div className="border-t border-[#f0e8dc] my-4 pt-4"></div>
               
               <a href="/operator/alerts" className={`${getTabClass('alerts')} justify-between`}>
                 <div className="flex items-center gap-3"><BellRing className="w-5 h-5" />Cảnh báo IoT</div>
@@ -108,8 +108,8 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
       )}
 
       {/* ---------------- DESKTOP SIDEBAR ---------------- */}
-      <aside className="w-64 bg-white border-r border-[#e5e7eb] hidden md:flex flex-col shadow-sm overflow-y-auto h-screen sticky top-0 shrink-0">
-        <a href="/" className="h-20 flex-shrink-0 flex items-center justify-center border-b border-[#e5e7eb] hover:bg-gray-50 transition-colors">
+      <aside className="w-64 bg-[#e8dccb] border-r border-[#e5e7eb] hidden md:flex flex-col shadow-sm overflow-y-auto h-screen sticky top-0 shrink-0">
+        <a href="/" className="h-20 flex-shrink-0 flex items-center justify-center border-b border-[#e5e7eb] hover:bg-[#d9c5ac] transition-colors">
           <div className="flex items-center">
             <div className="flex flex-col items-end pr-2 border-r border-[#7d4b1a] text-[#7d4b1a] leading-none">
               <strong className="text-[13px] font-medium tracking-[2px]">CRABSHARE</strong>
@@ -121,7 +121,7 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
           </div>
         </a>
         <nav className="flex-1 px-4 py-4 overflow-y-auto">
-          <ul className="divide-y divide-gray-100">
+          <ul className="divide-y-2 divide-white">
             {navLinks.map(link => {
               const Icon = link.icon;
               return (
@@ -136,7 +136,7 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
             </li>
           </ul>
         </nav>
-        <div className="p-4 border-t border-gray-200 space-y-2">
+        <div className="p-4 border-t border-[#e8dccb] space-y-2">
           {/* NÚT BẬT DEMO MOBILE */}
           {!isDemoFrame && (
             <button onClick={() => setShowSimulator(true)} className="w-full flex items-center justify-center gap-2 px-3 py-3 bg-[#171717] text-white rounded-md font-bold text-sm shadow hover:bg-[#333] transition-colors mb-2">
@@ -210,7 +210,7 @@ export default function OperatorLayout({ children, activeTab }: { children: Reac
                 <div className="absolute left-[-2px] top-24 w-1 h-12 bg-gray-800 rounded-l-lg"></div>
                 <div className="absolute left-[-2px] top-40 w-1 h-12 bg-gray-800 rounded-l-lg"></div>
 
-                <div className="w-full h-full rounded-[2.2rem] overflow-hidden bg-[#fcfbf9] relative border border-gray-900">
+                <div className="w-full h-full rounded-[2.2rem] overflow-hidden bg-[#f4efe8] relative border border-gray-900">
                   {/* Simulated Notch (tai thỏ) cho màn hình nhỏ */}
                   {device !== 'ipad' && (
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-50"></div>

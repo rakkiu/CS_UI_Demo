@@ -9,7 +9,7 @@ export default function OperatorDailyLog() {
         <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Ghi Log Hàng Ngày</h1>
         <p className="text-sm text-gray-500 mt-1">Cập nhật thông số môi trường & hình ảnh (BATCH-2026-11A)</p>
       </header>
-      <div className="max-w-2xl bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+      <div className="max-w-2xl bg-[#faf6f0] p-8 rounded-lg border border-[#e8dccb] shadow-sm">
         <form className="space-y-6">
           <div className="grid grid-cols-2 gap-6">
             <div>
@@ -27,7 +27,7 @@ export default function OperatorDailyLog() {
           </div>
           <div>
             <label className="block text-sm font-bold text-[#171717] mb-2">Tải ảnh/Video minh chứng</label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-10 flex flex-col items-center justify-center text-gray-500 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-10 flex flex-col items-center justify-center text-gray-500 bg-[#f4efe8] hover:bg-gray-100 cursor-pointer transition-colors">
               <UploadCloud className="w-8 h-8 mb-2" />
               <span className="text-sm font-medium">Nhấn hoặc Kéo thả ảnh vào đây</span>
             </div>
