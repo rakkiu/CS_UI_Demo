@@ -16,6 +16,7 @@ import OperatorSettlement from './OperatorSettlement'
 import OperatorBatchDetail from './OperatorBatchDetail'
 import StorePage from './StorePage'
 import CommercePage from './CommercePage'
+import InvestorApp from './investor/InvestorApp'
 import { DemoSessionProvider } from './DemoSession'
 import './index.css'
 
@@ -46,7 +47,7 @@ const routes: Record<string, React.ComponentType> = {
 
 // Remove query parameters for matching (e.g. /operator/batch/detail?demo=1 -> /operator/batch/detail)
 const pathName = window.location.pathname;
-const Page = routes[pathName] || App;
+const Page = pathName === '/investor' || pathName.startsWith('/investor/') ? InvestorApp : routes[pathName] || App;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

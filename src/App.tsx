@@ -62,6 +62,11 @@ function App() {
               <a href="#goi-dau-tu" className="pill-button border border-white/20 bg-black/90 px-7 py-3 text-xs shadow-lg">CÁC GÓI ĐẦU TƯ</a>
               <a href="#ve-chung-toi" className="pill-button border border-white/50 px-7 py-3 text-xs">CÂU CHUYỆN</a>
             </div>
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs">
+              <a href="/dang-nhap?demo=financial" className="inline-flex items-center gap-2 rounded-full border border-[#b98a55] bg-[#8b5023] px-5 py-3 font-semibold text-white transition hover:bg-[#a36532]">Trải nghiệm Investor <span aria-hidden="true">→</span></a>
+              <a href="/dang-nhap?demo=offtake" className="text-amber-100 underline underline-offset-4">Demo nhà đầu tư bao tiêu</a>
+              <span className="basis-full text-[11px] text-gray-400">Tự điền tài khoản mẫu · Không cần đăng ký</span>
+            </div>
           </div>
           <button onClick={() => openDialog('intro')} className="hidden h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white/60 bg-black/30 backdrop-blur-sm transition hover:scale-105 md:flex" aria-label="Giới thiệu CrabShare">
             <img src={asset('imgContainer2.svg')} alt="" />
