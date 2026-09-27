@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { SiteFooter, SiteHeader } from './SiteChrome'
 
 const asset = (name: string) => `/assets/${name}`
 
@@ -18,7 +19,9 @@ function LoginPage() {
   }
 
   return (
-    <main className="login-page">
+    <>
+      <SiteHeader />
+      <main className="login-page">
       <section className="login-card" aria-labelledby="login-title" data-node-id="67:1962">
         <header className="login-brand">
           <a href="/" className="login-logo" aria-label="CrabShare, về trang chủ">
@@ -49,7 +52,9 @@ function LoginPage() {
           <p className="login-signup">Don't have an account? <a href="/dang-ky">Sign Up</a></p>
         </form>
       </section>
-    </main>
+      </main>
+      <SiteFooter />
+    </>
   )
 }
 
