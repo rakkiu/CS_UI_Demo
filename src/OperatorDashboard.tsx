@@ -1,5 +1,6 @@
 
-import { PlusCircle, Activity, Droplets, AlertCircle, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import { PlusCircle, Activity, Droplets, AlertCircle, ChevronRight, Filter } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import OperatorLayout from './OperatorLayout';
 
@@ -19,23 +20,51 @@ const recentLogs = [
 ];
 
 export default function OperatorDashboard() {
+  const [selectedBatch, setSelectedBatch] = useState('ALL');
+
   const handleLogClick = () => {
     window.location.href = '/operator/log';
   };
 
+  const getMetrics = () => {
+    if (selectedBatch === 'BATCH-2026-11A') {
+      return { crabs: 1240, alerts: 2, harvest: 450 };
+    } else if (selectedBatch === 'BATCH-2026-10B') {
+      return { crabs: 2260, alerts: 0, harvest: 750 };
+    }
+    // ALL
+    return { crabs: 3500, alerts: 2, harvest: 1200 };
+  };
+
+  const metrics = getMetrics();
+
   return (
     <OperatorLayout activeTab="dashboard">
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
         <div>
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
             <span>Operator</span>
             <ChevronRight className="w-4 h-4" />
             <span className="font-semibold text-[#7d4b1a]">Trại Cần Giờ 01</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Tổng quan Trại</h1>
-          <p className="text-sm text-gray-500 mt-1">Lô đang nuôi: BATCH-2026-11A</p>
+          <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight mb-3">Tổng quan Trại</h1>
+          
+          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-md p-1 pr-3 shadow-sm inline-flex">
+            <div className="p-2 bg-gray-50 rounded">
+              <Filter className="w-4 h-4 text-gray-500" />
+            </div>
+            <select 
+              value={selectedBatch}
+              onChange={(e) => setSelectedBatch(e.target.value)}
+              className="bg-transparent border-none text-sm font-bold text-[#7d4b1a] outline-none cursor-pointer pr-2"
+            >
+              <option value="ALL">Tất cả Lô đang nuôi</option>
+              <option value="BATCH-2026-11A">Lô Cua Lột: BATCH-2026-11A</option>
+              <option value="BATCH-2026-10B">Lô Cua Gạch: BATCH-2026-10B</option>
+            </select>
+          </div>
         </div>
-        <button onClick={handleLogClick} className="flex items-center gap-2 bg-[#171717] hover:bg-[#333] text-white px-5 py-2.5 rounded text-sm font-medium transition-colors shadow-md">
+        <button onClick={handleLogClick} className="flex items-center justify-center gap-2 bg-[#171717] hover:bg-[#333] text-white px-5 py-2.5 rounded text-sm font-medium transition-colors shadow-md w-full md:w-auto">
           <PlusCircle className="w-4 h-4" />
           <span>Ghi Log Hàng Ngày</span>
         </button>
@@ -46,25 +75,33 @@ export default function OperatorDashboard() {
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Cua đang nuôi</p>
-            <h3 className="text-3xl font-extrabold text-[#171717]">1,240 <span className="text-sm font-medium text-gray-500">con</span></h3>
+            <h3 className="text-3xl font-extrabold text-[#171717]">
+              {metrics.crabs.toLocaleString('en-US')} <span className="text-sm font-medium text-gray-500">con</span>
+            </h3>
           </div>
           <div className="w-12 h-12 bg-[#fff8ef] rounded-full flex items-center justify-center text-[#7d4b1a] border border-[#f4cf9c]">
             <Activity className="w-5 h-5" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-[#fca5a5] shadow-sm flex items-center justify-between ring-1 ring-[#fef2f2]">
+        <div className={`bg-white p-6 rounded-lg border shadow-sm flex items-center justify-between ${metrics.alerts > 0 ? 'border-[#fca5a5] ring-1 ring-[#fef2f2]' : 'border-gray-200'}`}>
           <div>
-            <p className="text-xs font-bold text-[#b42318] uppercase tracking-wider mb-1">Cảnh báo hệ thống</p>
-            <h3 className="text-3xl font-extrabold text-[#b42318]">2 <span className="text-sm font-medium text-[#fca5a5]">cần xử lý</span></h3>
+            <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${metrics.alerts > 0 ? 'text-[#b42318]' : 'text-gray-500'}`}>
+              Cảnh báo hệ thống
+            </p>
+            <h3 className={`text-3xl font-extrabold ${metrics.alerts > 0 ? 'text-[#b42318]' : 'text-[#171717]'}`}>
+              {metrics.alerts} <span className={`text-sm font-medium ${metrics.alerts > 0 ? 'text-[#fca5a5]' : 'text-gray-500'}`}>cần xử lý</span>
+            </h3>
           </div>
-          <div className="w-12 h-12 bg-[#fef2f2] rounded-full flex items-center justify-center text-[#b42318]">
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${metrics.alerts > 0 ? 'bg-[#fef2f2] text-[#b42318]' : 'bg-gray-50 text-gray-400'}`}>
             <AlertCircle className="w-5 h-5" />
           </div>
         </div>
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Dự kiến thu hoạch</p>
-            <h3 className="text-3xl font-extrabold text-[#171717]">450 <span className="text-sm font-medium text-gray-500">kg</span></h3>
+            <h3 className="text-3xl font-extrabold text-[#171717]">
+              {metrics.harvest.toLocaleString('en-US')} <span className="text-sm font-medium text-gray-500">kg</span>
+            </h3>
           </div>
           <div className="w-12 h-12 bg-[#f0f9ff] rounded-full flex items-center justify-center text-[#0369a1]">
             <Droplets className="w-5 h-5" />
