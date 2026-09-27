@@ -10,7 +10,7 @@ export default function OperatorCreateBatch() {
         <p className="text-sm text-gray-500 mt-1">Đệ trình kế hoạch gọi vốn và sản xuất lên Admin</p>
       </header>
       
-      <div className="max-w-3xl bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+      <div className="max-w-3xl bg-[#faf6f0] p-8 rounded-lg border border-[#e8dccb] shadow-sm">
         <form className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
@@ -19,7 +19,7 @@ export default function OperatorCreateBatch() {
             </div>
             <div>
               <label className="block text-sm font-bold text-[#171717] mb-2">Loại Cua</label>
-              <select className="w-full p-3 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none font-medium text-sm bg-white">
+              <select className="w-full p-3 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none font-medium text-sm bg-[#faf6f0]">
                 <option>Cua Lột (SoftShell Crab)</option>
                 <option>Cua Gạch (Roe Crab)</option>
                 <option>Cua Thịt (Fattening Mud Crab)</option>

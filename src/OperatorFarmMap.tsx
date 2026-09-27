@@ -59,7 +59,7 @@ export default function OperatorFarmMap() {
             </select>
           </div>
         </div>
-        <div className="flex gap-4 bg-white px-4 py-2.5 rounded border border-gray-200 shadow-sm">
+        <div className="flex gap-4 bg-[#faf6f0] px-4 py-2.5 rounded border border-[#e8dccb] shadow-sm">
           <span className="flex items-center gap-2 text-xs font-bold text-gray-600"><div className="w-3 h-3 rounded border border-gray-300 bg-[#f4cf9c]"></div> Đang nuôi</span>
           <span className="flex items-center gap-2 text-xs font-bold text-gray-600"><div className="w-3 h-3 rounded border border-[#b42318] bg-[#fca5a5]"></div> Cảnh báo</span>
           <span className="flex items-center gap-2 text-xs font-bold text-gray-600"><div className="w-3 h-3 rounded border border-gray-300" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #f9fafb, #f9fafb 2px, #e5e7eb 2px, #e5e7eb 4px)' }}></div> Trống</span>
@@ -68,51 +68,51 @@ export default function OperatorFarmMap() {
       
       {/* Summary Box */}
       <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
-        <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm col-span-2 flex items-center justify-between">
+        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm col-span-2 flex items-center justify-between">
           <div><p className="text-xs font-bold text-gray-500 uppercase">Trạng thái chung</p><h3 className="font-extrabold text-lg mt-1 text-[#171717]">Tốt / Ổn định</h3></div>
           <Activity className="text-green-600 w-8 h-8 opacity-50" />
         </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm text-center">
           <p className="text-[10px] font-bold text-gray-500 uppercase">Đang nuôi</p><h3 className="font-extrabold text-xl text-[#7d4b1a]">{stats.occupied}</h3>
         </div>
         <div className="bg-[#fef2f2] p-4 rounded-lg border border-[#fca5a5] shadow-sm text-center">
           <p className="text-[10px] font-bold text-[#b42318] uppercase">Cảnh báo</p><h3 className="font-extrabold text-xl text-[#b42318]">{stats.alert}</h3>
         </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #f9fafb, #f9fafb 5px, #f3f4f6 5px, #f3f4f6 10px)' }}>
+        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm text-center" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #f9fafb, #f9fafb 5px, #f3f4f6 5px, #f3f4f6 10px)' }}>
           <p className="text-[10px] font-bold text-gray-500 uppercase">Ô trống</p><h3 className="font-extrabold text-xl text-gray-500">{stats.empty}</h3>
         </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm text-center">
           <p className="text-[10px] font-bold text-gray-500 uppercase">Môi trường</p>
           <div className="flex justify-center gap-2 mt-1 text-xs font-bold"><Droplets className="w-3 h-3 text-blue-500"/>{currentBatch.ph} <Thermometer className="w-3 h-3 text-red-500 ml-1"/>{currentBatch.temp}</div>
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+      <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm">
         <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-6">
           {displayedBoxes.map(slot => (
             <div key={slot.id} onClick={() => setSelectedBox(slot)} className={`aspect-square rounded flex flex-col items-center justify-center border-2 cursor-pointer transition-transform hover:scale-105 shadow-sm
-              ${slot.status === 'alert' ? 'bg-[#fef2f2] border-[#b42318] text-[#b42318]' : 
+              ${slot.status === 'alert' ? 'bg-[#fca5a5] border-[#991b1b] text-[#7f1d1d]' : 
                 slot.status === 'empty' ? 'border-gray-300 text-gray-400 opacity-60' : 
-                'bg-[#fff8ef] border-[#7d4b1a] text-[#7d4b1a]'}`}
+                'bg-[#f4cf9c] border-[#7d4b1a] text-[#5c3716]'}`}
               style={slot.status === 'empty' ? { backgroundImage: 'repeating-linear-gradient(45deg, #ffffff, #ffffff 4px, #e5e7eb 4px, #e5e7eb 8px)' } : {}}
             >
-              <span className={`text-[12px] font-extrabold ${slot.status === 'empty' ? 'bg-white px-1' : ''}`}>{slot.id}</span>
+              <span className={`text-[12px] font-extrabold ${slot.status === 'empty' ? 'bg-[#faf6f0] px-1' : ''}`}>{slot.id}</span>
               {slot.status !== 'empty' && <span className="text-[10px] font-bold opacity-90 mt-0.5">{slot.weight}</span>}
             </div>
           ))}
         </div>
 
         {totalPages > 1 && (
-          <div className="flex items-center justify-between border-t border-gray-100 pt-5 mt-2">
+          <div className="flex items-center justify-between border-t border-[#f0e8dc] pt-5 mt-2">
             <span className="text-sm text-gray-500 font-medium">
               Đang hiển thị ô <strong className="text-[#171717]">{(page - 1) * BOXES_PER_PAGE + 1}</strong> đến <strong className="text-[#171717]">{Math.min(page * BOXES_PER_PAGE, currentBatch.totalBoxes)}</strong> / {currentBatch.totalBoxes}
             </span>
             <div className="flex items-center gap-3">
-              <button disabled={page === 1} onClick={() => setPage((p: number) => p - 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-gray-50">
+              <button disabled={page === 1} onClick={() => setPage((p: number) => p - 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-[#f4efe8]">
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <span className="text-sm font-extrabold text-[#7d4b1a] px-2">{page} <span className="text-gray-400">/</span> {totalPages}</span>
-              <button disabled={page === totalPages} onClick={() => setPage((p: number) => p + 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-gray-50">
+              <button disabled={page === totalPages} onClick={() => setPage((p: number) => p + 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-[#f4efe8]">
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
@@ -123,7 +123,7 @@ export default function OperatorFarmMap() {
       {/* Box History Modal */}
       {selectedBox && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
+          <div className="bg-[#faf6f0] rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
             <div className="bg-[#171717] text-white p-4 flex justify-between items-center">
               <div>
                 <h3 className="font-extrabold text-lg">Chi tiết Ô nuôi: {selectedBox.id}</h3>
@@ -132,8 +132,8 @@ export default function OperatorFarmMap() {
               <button onClick={() => setSelectedBox(null)} className="text-gray-400 hover:text-white transition-colors"><X className="w-6 h-6" /></button>
             </div>
             <div className="p-6">
-              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
-                <div className={`w-16 h-16 rounded-full flex flex-col items-center justify-center border-4 ${selectedBox.status === 'alert' ? 'border-[#b42318] bg-[#fef2f2] text-[#b42318]' : selectedBox.status === 'empty' ? 'border-gray-200 bg-gray-100 text-gray-400' : 'border-[#7d4b1a] bg-[#fff8ef] text-[#7d4b1a]'}`}>
+              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-[#f0e8dc]">
+                <div className={`w-16 h-16 rounded-full flex flex-col items-center justify-center border-4 ${selectedBox.status === 'alert' ? 'border-[#991b1b] bg-[#fca5a5] text-[#7f1d1d]' : selectedBox.status === 'empty' ? 'border-[#e8dccb] bg-gray-100 text-gray-400' : 'border-[#7d4b1a] bg-[#f4cf9c] text-[#5c3716]'}`}>
                   <span className="font-extrabold text-lg">{selectedBox.weight || '-'}</span>
                 </div>
                 <div>
@@ -151,12 +151,12 @@ export default function OperatorFarmMap() {
                   <div className="border-l-2 border-[#f4cf9c] pl-4">
                     <p className="font-bold text-sm text-gray-800">Cập nhật môi trường & Hình ảnh</p>
                     <p className="text-xs text-gray-600 mt-1">pH: {currentBatch.ph} | Nước: {currentBatch.temp}</p>
-                    {selectedBox.status !== 'empty' && <img src="https://images.unsplash.com/photo-1628198755051-789063de2d50?auto=format&fit=crop&q=80&w=150&h=150" alt="Crab" className="w-20 h-20 object-cover rounded mt-2 border border-gray-200" />}
+                    {selectedBox.status !== 'empty' && <img src="https://images.unsplash.com/photo-1628198755051-789063de2d50?auto=format&fit=crop&q=80&w=150&h=150" alt="Crab" className="w-20 h-20 object-cover rounded mt-2 border border-[#e8dccb]" />}
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div className="text-xs text-gray-400 font-bold whitespace-nowrap pt-1">Hôm qua<br/>17:30</div>
-                  <div className="border-l-2 border-gray-200 pl-4">
+                  <div className="border-l-2 border-[#e8dccb] pl-4">
                     <p className="font-bold text-sm text-gray-800">Cho ăn cữ chiều</p>
                     <p className="text-xs text-gray-600 mt-1">Sử dụng cám viên sinh học (15g)</p>
                   </div>

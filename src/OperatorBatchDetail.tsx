@@ -39,8 +39,8 @@ export default function OperatorBatchDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-[#7d4b1a] shadow-sm ring-1 ring-[#fff8ef]">
-            <div className="flex items-center gap-3 mb-4 border-b border-gray-100 pb-3">
+          <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#7d4b1a] shadow-sm ring-1 ring-[#fff8ef]">
+            <div className="flex items-center gap-3 mb-4 border-b border-[#f0e8dc] pb-3">
               <div className="w-8 h-8 rounded-full bg-[#fff8ef] text-[#7d4b1a] flex items-center justify-center border border-[#f4cf9c]">
                 <Briefcase className="w-4 h-4" />
               </div>
@@ -66,10 +66,10 @@ export default function OperatorBatchDetail() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+          <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm">
+            <div className="flex items-center justify-between mb-4 border-b border-[#f0e8dc] pb-3">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center border border-gray-200">
+                <div className="w-8 h-8 rounded-full bg-[#f4efe8] text-gray-600 flex items-center justify-center border border-[#e8dccb]">
                   <Users className="w-4 h-4" />
                 </div>
                 <h2 className="text-lg font-extrabold text-[#171717]">Danh sách Nhà Đầu Tư (Investors)</h2>
@@ -80,17 +80,17 @@ export default function OperatorBatchDetail() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="bg-gray-50 text-gray-500">
-                    <th className="p-3 font-bold border-b border-gray-200 rounded-tl">Tên Nhà Đầu Tư</th>
-                    <th className="p-3 font-bold border-b border-gray-200">Phân loại</th>
-                    <th className="p-3 font-bold border-b border-gray-200 text-right">Số tiền góp</th>
-                    <th className="p-3 font-bold border-b border-gray-200 text-right">Tỷ lệ</th>
-                    <th className="p-3 font-bold border-b border-gray-200 rounded-tr">Trạng thái</th>
+                  <tr className="bg-[#f4efe8] text-gray-500">
+                    <th className="p-3 font-bold border-b border-[#e8dccb] rounded-tl">Tên Nhà Đầu Tư</th>
+                    <th className="p-3 font-bold border-b border-[#e8dccb]">Phân loại</th>
+                    <th className="p-3 font-bold border-b border-[#e8dccb] text-right">Số tiền góp</th>
+                    <th className="p-3 font-bold border-b border-[#e8dccb] text-right">Tỷ lệ</th>
+                    <th className="p-3 font-bold border-b border-[#e8dccb] rounded-tr">Trạng thái</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {investors.map((inv, idx) => (
-                    <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                    <tr key={idx} className="hover:bg-[#f4efe8] transition-colors">
                       <td className="p-3 font-extrabold text-[#7d4b1a]">{inv.name}</td>
                       <td className="p-3 text-gray-600 font-medium">{inv.role}</td>
                       <td className="p-3 font-bold text-right text-[#171717]">{inv.amount}</td>
@@ -107,10 +107,10 @@ export default function OperatorBatchDetail() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h3 className="font-extrabold text-[#171717] mb-4 border-b border-gray-100 pb-2">Hồ sơ Pháp lý Lô Nuôi</h3>
+          <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm">
+            <h3 className="font-extrabold text-[#171717] mb-4 border-b border-[#f0e8dc] pb-2">Hồ sơ Pháp lý Lô Nuôi</h3>
             <div className="space-y-3">
-              <button onClick={() => window.location.href='/operator/contract'} className="w-full flex items-center justify-between p-3 border border-gray-200 rounded hover:border-[#7d4b1a] hover:bg-[#fff8ef] transition-all group">
+              <button onClick={() => window.location.href='/operator/contract'} className="w-full flex items-center justify-between p-3 border border-[#e8dccb] rounded hover:border-[#7d4b1a] hover:bg-[#fff8ef] transition-all group">
                 <div className="flex items-center gap-3">
                   <FileText className="w-5 h-5 text-gray-400 group-hover:text-[#7d4b1a]" />
                   <div className="text-left">

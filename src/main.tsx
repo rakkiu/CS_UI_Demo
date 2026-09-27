@@ -17,6 +17,17 @@ import OperatorBatchDetail from './OperatorBatchDetail'
 import StorePage from './StorePage'
 import CommercePage from './CommercePage'
 import InvestorApp from './investor/InvestorApp'
+import AdminDashboard from './admin/AdminDashboard'
+import AdminUsers from './admin/AdminUsers'
+import AdminUserDetail from './admin/AdminUserDetail'
+import AdminBatches from './admin/AdminBatches'
+import AdminBatchDetail from './admin/AdminBatchDetail'
+import AdminStorefront from './admin/AdminStorefront'
+import AdminFinance from './admin/AdminFinance'
+import AdminSettlementDetail from './admin/AdminSettlementDetail'
+import AdminAlerts from './admin/AdminAlerts'
+import AdminDisputes from './admin/AdminDisputes'
+import AdminSettings from './admin/AdminSettings'
 import { DemoSessionProvider } from './DemoSession'
 import './index.css'
 
@@ -43,6 +54,17 @@ const routes: Record<string, React.ComponentType> = {
   '/operator/batch': OperatorBatchStatus,
   '/operator/batch/detail': OperatorBatchDetail,
   '/operator/alerts': OperatorAlerts,
+  '/admin': AdminDashboard,
+  '/admin/users': AdminUsers,
+  '/admin/users/detail': AdminUserDetail,
+  '/admin/batches': AdminBatches,
+  '/admin/batches/detail': AdminBatchDetail,
+  '/admin/storefront': AdminStorefront,
+  '/admin/finance': AdminFinance,
+  '/admin/finance/settlement': AdminSettlementDetail,
+  '/admin/alerts': AdminAlerts,
+  '/admin/disputes': AdminDisputes,
+  '/admin/settings': AdminSettings,
 }
 
 // Remove query parameters for matching (e.g. /operator/batch/detail?demo=1 -> /operator/batch/detail)

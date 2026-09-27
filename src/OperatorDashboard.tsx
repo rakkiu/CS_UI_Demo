@@ -49,8 +49,8 @@ export default function OperatorDashboard() {
           </div>
           <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight mb-3">Tổng quan Trại</h1>
           
-          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-md p-1 pr-3 shadow-sm inline-flex">
-            <div className="p-2 bg-gray-50 rounded">
+          <div className="flex items-center gap-2 bg-[#faf6f0] border border-[#e8dccb] rounded-md p-1 pr-3 shadow-sm inline-flex">
+            <div className="p-2 bg-[#f4efe8] rounded">
               <Filter className="w-4 h-4 text-gray-500" />
             </div>
             <select 
@@ -72,7 +72,7 @@ export default function OperatorDashboard() {
 
       {/* Summary Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Cua đang nuôi</p>
             <h3 className="text-3xl font-extrabold text-[#171717]">
@@ -83,7 +83,7 @@ export default function OperatorDashboard() {
             <Activity className="w-5 h-5" />
           </div>
         </div>
-        <div className={`bg-white p-6 rounded-lg border shadow-sm flex items-center justify-between ${metrics.alerts > 0 ? 'border-[#fca5a5] ring-1 ring-[#fef2f2]' : 'border-gray-200'}`}>
+        <div className={`bg-[#faf6f0] p-6 rounded-lg border shadow-sm flex items-center justify-between ${metrics.alerts > 0 ? 'border-[#fca5a5] ring-1 ring-[#fef2f2]' : 'border-[#e8dccb]'}`}>
           <div>
             <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${metrics.alerts > 0 ? 'text-[#b42318]' : 'text-gray-500'}`}>
               Cảnh báo hệ thống
@@ -92,11 +92,11 @@ export default function OperatorDashboard() {
               {metrics.alerts} <span className={`text-sm font-medium ${metrics.alerts > 0 ? 'text-[#fca5a5]' : 'text-gray-500'}`}>cần xử lý</span>
             </h3>
           </div>
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${metrics.alerts > 0 ? 'bg-[#fef2f2] text-[#b42318]' : 'bg-gray-50 text-gray-400'}`}>
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${metrics.alerts > 0 ? 'bg-[#fef2f2] text-[#b42318]' : 'bg-[#f4efe8] text-gray-400'}`}>
             <AlertCircle className="w-5 h-5" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
+        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Dự kiến thu hoạch</p>
             <h3 className="text-3xl font-extrabold text-[#171717]">
@@ -111,7 +111,7 @@ export default function OperatorDashboard() {
 
       {/* Chart & Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="lg:col-span-2 bg-[#faf6f0] rounded-lg border border-[#e8dccb] shadow-sm p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-base font-extrabold text-[#171717]">Chỉ số Môi trường (Hôm nay)</h2>
             <div className="flex items-center gap-4 text-xs font-semibold">
@@ -134,7 +134,7 @@ export default function OperatorDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="bg-[#faf6f0] rounded-lg border border-[#e8dccb] shadow-sm p-6">
           <h2 className="text-base font-extrabold text-[#171717] mb-6">Nhật ký gần nhất</h2>
           <div className="space-y-6">
             {recentLogs.map((log, i) => (
@@ -152,7 +152,7 @@ export default function OperatorDashboard() {
               </div>
             ))}
           </div>
-          <button onClick={() => window.location.href='/operator/log'} className="w-full mt-6 py-2 border border-gray-200 text-xs font-bold text-gray-600 rounded hover:bg-gray-50 transition-colors uppercase tracking-wider cursor-pointer">
+          <button onClick={() => window.location.href='/operator/log'} className="w-full mt-6 py-2 border border-[#e8dccb] text-xs font-bold text-gray-600 rounded hover:bg-[#f4efe8] transition-colors uppercase tracking-wider cursor-pointer">
             Ghi log mới
           </button>
         </div>

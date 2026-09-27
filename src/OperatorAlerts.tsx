@@ -17,7 +17,7 @@ export default function OperatorAlerts() {
       
       <div className="space-y-4 max-w-4xl">
         {alerts.map(a => (
-          <div key={a.id} className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-[#b42318] transition-colors group">
+          <div key={a.id} className="bg-[#faf6f0] border border-[#e8dccb] rounded-lg p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-[#b42318] transition-colors group">
             <div className="flex gap-4 items-start">
               <div className={`p-3 rounded-full mt-1 ${a.severity === 'high' ? 'bg-[#fef2f2] text-[#b42318]' : 'bg-[#fffbeb] text-[#b45309]'}`}>
                 {a.severity === 'high' ? <AlertTriangle className="w-6 h-6" /> : <Droplets className="w-6 h-6" />}
@@ -48,7 +48,7 @@ export default function OperatorAlerts() {
         ))}
 
         {alerts.length === 0 && (
-          <div className="text-center py-16 bg-white border border-gray-200 rounded-lg shadow-sm">
+          <div className="text-center py-16 bg-[#faf6f0] border border-[#e8dccb] rounded-lg shadow-sm">
             <CheckCircle2 className="w-12 h-12 text-[#15803d] mx-auto mb-3 opacity-50" />
             <h3 className="font-bold text-lg text-gray-800">Mọi thứ đều ổn!</h3>
             <p className="text-sm text-gray-500 mt-1">Không có cảnh báo nào từ hệ thống cảm biến lúc này.</p>

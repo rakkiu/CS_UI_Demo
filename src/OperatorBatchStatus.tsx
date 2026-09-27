@@ -7,7 +7,7 @@ export default function OperatorBatchStatus() {
     { id: 'BATCH-2026-11A', type: 'Cua Lột (SoftShell)', status: 'Đang sản xuất', step: 3, total: 1500, cap: '75.000.000 ₫', color: 'text-[#0369a1]', bg: 'bg-[#f0f9ff]', border: 'border-[#bae6fd]', investor: '12 NĐT (Góp 100%)', alerts: 2 },
     { id: 'BATCH-2026-12C', type: 'Cua Thịt (Fattening)', status: 'Đang gọi vốn', step: 1, total: 2000, cap: '100.000.000 ₫', color: 'text-[#b45309]', bg: 'bg-[#fffbeb]', border: 'border-[#fde68a]', investor: 'Đang mở bán (45%)', alerts: 0 },
     { id: 'BATCH-2026-10B', type: 'Cua Gạch (RoeCrab)', status: 'Đang thu hoạch', step: 4, total: 800, cap: '40.000.000 ₫', color: 'text-[#15803d]', bg: 'bg-[#f0fdf4]', border: 'border-[#bbf7d0]', investor: 'Hải Sản Biển Đông (Bao tiêu)', alerts: 0 },
-    { id: 'BATCH-2026-09A', type: 'Cua Lột (SoftShell)', status: 'Đã tất toán', step: 5, total: 1000, cap: '50.000.000 ₫', color: 'text-gray-600', bg: 'bg-gray-100', border: 'border-gray-200', investor: '8 NĐT (Hoàn tất)', alerts: 0 },
+    { id: 'BATCH-2026-09A', type: 'Cua Lột (SoftShell)', status: 'Đã tất toán', step: 5, total: 1000, cap: '50.000.000 ₫', color: 'text-gray-600', bg: 'bg-gray-100', border: 'border-[#e8dccb]', investor: '8 NĐT (Hoàn tất)', alerts: 0 },
   ];
 
   return (
@@ -24,7 +24,7 @@ export default function OperatorBatchStatus() {
       
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {batches.map(b => (
-          <div key={b.id} onClick={() => window.location.href='/operator/batch/detail'} className="relative bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between hover:border-[#7d4b1a] hover:shadow-md transition-all cursor-pointer mt-2">
+          <div key={b.id} onClick={() => window.location.href='/operator/batch/detail'} className="relative bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex flex-col justify-between hover:border-[#7d4b1a] hover:shadow-md transition-all cursor-pointer mt-2">
             
             {/* ALERT BADGE */}
             {b.alerts > 0 && (
@@ -44,7 +44,7 @@ export default function OperatorBatchStatus() {
               </span>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mb-4 text-sm border-b border-gray-100 pb-4">
+            <div className="grid grid-cols-2 gap-4 mb-4 text-sm border-b border-[#f0e8dc] pb-4">
               <div className="flex items-center gap-2"><Package className="w-4 h-4 text-gray-400"/> <span className="font-semibold text-gray-700">{b.total} con giống</span></div>
               <div className="flex items-center gap-2"><DollarSign className="w-4 h-4 text-gray-400"/> <span className="font-semibold text-gray-700">{b.cap}</span></div>
             </div>
