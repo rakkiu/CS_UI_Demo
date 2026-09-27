@@ -13,6 +13,11 @@ function LoginPage() {
 
   const signIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (email.toLowerCase() === 'operator@crabshare.com') {
+      saveSession()
+      window.location.assign('/operator')
+      return
+    }
     saveSession()
     window.location.assign('/')
   }
