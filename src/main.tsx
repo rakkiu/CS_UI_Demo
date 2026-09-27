@@ -1,10 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
 import './index.css'
 
-const Page = window.location.pathname === '/dang-ky' ? RegisterPage : App
+const routes = {
+  '/dang-ky': RegisterPage,
+  '/dang-nhap': LoginPage,
+}
+const Page = routes[window.location.pathname as keyof typeof routes] ?? App
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

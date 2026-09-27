@@ -77,7 +77,7 @@ function App() {
             ))}
           </div>
           <div className="hidden items-center gap-3 lg:flex">
-            <button className="pill-button border border-white/50 px-5 py-2 text-[11px]" onClick={() => openDialog('login')}>ĐĂNG NHẬP</button>
+            <a className="pill-button border border-white/50 px-5 py-2 text-[11px]" href="/dang-nhap">ĐĂNG NHẬP</a>
             <a className="pill-button bg-white px-5 py-2 text-[11px] text-black" href="/dang-ky">ĐĂNG KÝ</a>
           </div>
           <button className="rounded-full border border-white/50 px-4 py-2 text-xs font-bold lg:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="mobile-menu">
@@ -90,7 +90,7 @@ function App() {
             <div className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-[#171717] p-5 shadow-2xl">
               {navItems.map((item) => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="py-2 text-xs font-semibold tracking-wider">{item.label}</a>)}
               <div className="mt-2 flex gap-2">
-                <button className="pill-button border border-white/40 px-4 py-2 text-xs" onClick={() => openDialog('login')}>ĐĂNG NHẬP</button>
+                <a className="pill-button border border-white/40 px-4 py-2 text-xs" href="/dang-nhap">ĐĂNG NHẬP</a>
                 <a className="pill-button bg-white px-4 py-2 text-xs text-black" href="/dang-ky">ĐĂNG KÝ</a>
               </div>
             </div>
@@ -296,7 +296,7 @@ function App() {
           <div>
             <h3 className="footer-title">Ứng Dụng</h3>
             <div className="mt-4 flex flex-col items-start gap-2">
-              <button onClick={() => openDialog('login')} className="pill-button w-28 bg-black py-2 text-[11px] text-white">ĐĂNG NHẬP</button>
+              <a href="/dang-nhap" className="pill-button w-28 bg-black py-2 text-[11px] text-white">ĐĂNG NHẬP</a>
               <a href="/dang-ky" className="pill-button w-28 bg-black py-2 text-[11px] text-white">ĐĂNG KÝ</a>
             </div>
           </div>

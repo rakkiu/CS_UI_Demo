@@ -126,7 +126,7 @@ function RegisterPage() {
           {message && <p className={message.startsWith('Tài khoản') ? 'register-success' : 'register-error'} role="status">{message}</p>}
         </form>
 
-        <p className="register-signin">Do you have an existing account? <a href="/">Sign in</a></p>
+        <p className="register-signin">Do you have an existing account? <a href="/dang-nhap">Sign in</a></p>
       </section>
     </main>
   )
