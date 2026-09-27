@@ -31,6 +31,11 @@ function LoginPage() {
       window.location.assign('/operator')
       return
     }
+    if (email.toLowerCase() === 'admin@crabshare.com') {
+      saveSession()
+      window.location.assign('/admin')
+      return
+    }
     saveSession()
     window.location.assign('/')
   }

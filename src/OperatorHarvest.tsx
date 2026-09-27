@@ -76,11 +76,41 @@ export default function OperatorHarvest() {
         </button>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
           <div>
-            <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Khu vực Gắn QR & Đóng Gói</h1>
+            <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Khu vực Thu Hoạch & Đóng Gói</h1>
             <p className="text-sm text-gray-500 mt-1">Lô {batchId} • Khả dụng: 600 con</p>
           </div>
         </div>
       </header>
+
+      {/* TÍNH NĂNG MỚI: ĐỊNH GIÁ BÁN THEO BR-56 */}
+      <div className="bg-[#fff8ef] p-6 rounded-lg border border-[#f4cf9c] shadow-sm mb-6">
+        <div className="flex justify-between items-center mb-4 border-b border-[#f4cf9c] pb-3">
+          <h2 className="text-base font-extrabold text-[#7d4b1a]">Thiết lập Giá Bán & Yêu cầu lên Cửa hàng (Storefront)</h2>
+          <span className="text-xs font-bold bg-[#ffedd5] text-[#7d4b1a] px-2 py-1 rounded">BR-56: Operator tự định giá</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="block text-sm font-bold text-[#171717] mb-2">Cua Lột Loại 1 (200g+)</label>
+            <div className="flex items-center gap-2">
+              <input type="number" defaultValue={850000} className="w-full p-2 border border-[#f4cf9c] bg-white rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
+              <span className="text-sm font-bold text-gray-500">VND/kg</span>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-[#171717] mb-2">Cua Lột Loại 2 (150g+)</label>
+            <div className="flex items-center gap-2">
+              <input type="number" defaultValue={650000} className="w-full p-2 border border-[#f4cf9c] bg-white rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
+              <span className="text-sm font-bold text-gray-500">VND/kg</span>
+            </div>
+          </div>
+          <div className="flex items-end">
+            <button onClick={() => alert('Đã lưu giá và gửi yêu cầu đến Admin. Chờ Admin duyệt lên Storefront!')} className="w-full bg-[#7d4b1a] hover:bg-[#6b3f15] text-white py-2.5 rounded font-bold text-sm shadow-md transition-colors flex justify-center items-center gap-2">
+              <PackageCheck className="w-4 h-4" /> Yêu cầu Admin Duyệt Lên Kệ
+            </button>
+          </div>
+        </div>
+        <p className="text-xs text-[#7d4b1a] mt-3 italic">* Hệ thống cảnh báo: Giá Cua Loại 1 của bạn đang cao hơn 10% so với mặt bằng chung (Đây chỉ là cảnh báo, Nền tảng không áp giá theo quy định BR-56).</p>
+      </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Cột 1: Form Sinh QR */}
