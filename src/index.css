@@ -329,11 +329,6 @@ footer a:hover, footer button:hover { color: #916026; }
 .login-demo-btn--filled:hover:not(:disabled) {
   background: #6e4018;
 }
-.login-demo-icon {
-  font-size: 22px;
-  line-height: 1;
-  flex: 0 0 auto;
-}
 .login-demo-btn-text {
   display: flex;
   flex-direction: column;
