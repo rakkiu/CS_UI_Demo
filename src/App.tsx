@@ -1,278 +1,72 @@
 import { useState, type FormEvent } from 'react'
-import { SiteFooter, SiteHeader } from './SiteChrome'
+import { SiteHeader, SiteFooter } from './SiteChrome'
+import { useDemoSession } from './DemoSession'
+import './minhbach.css'
 
-const asset = (name: string) => `/assets/${name}`
-
-const packages = [
-  { label: 'Chu kỳ (Term)', first: '45 – 60 ngày', second: '6 tháng – 1 năm' },
-  { label: 'Mức đầu tư (Price)', first: '2.500.000 ₫', second: '50.000.000 ₫' },
-  { label: 'Lợi nhuận ước tính', first: '450.000 ₫', second: '14% ROI + Giảm 15% sỉ' },
-  { label: 'Tỷ suất LN (%/năm)', first: '18% – 24% / năm', second: '14%' },
-  { label: 'Tổng hoàn vốn', first: 'Xem bảng tính', second: 'Xem hợp đồng', link: true },
-  { label: 'Tình trạng', first: 'Còn 120 slot', second: 'Còn hàng' },
+const photo = (name: string) => `/minhbach/${name}`
+const money = (n: number) => `${n.toLocaleString('vi-VN')} ₫`
+const farmers = [
+  { name: 'Nguyễn Văn Tám', pond: 'Đầm Năm Căn', harvest: '12,4 tấn', ponds: 3, x: 18, y: 20 },
+  { name: 'Trần Văn Hải', pond: 'Đầm Đất Mũi', harvest: '8,6 tấn', ponds: 1, x: 62, y: 12 },
+  { name: 'Lê Minh Quân', pond: 'Đầm Ngọc Hiển', harvest: '15,2 tấn', ponds: 2, x: 81, y: 56 },
+  { name: 'Phạm Văn Đức', pond: 'Đầm Cái Nước', harvest: '6,9 tấn', ponds: 1, x: 20, y: 73 },
+  { name: 'Võ Thị Hồng', pond: 'Đầm Phú Tân', harvest: '9,8 tấn', ponds: 2, x: 61, y: 83 },
 ]
-
+const lots = [
+  { code: 'CM-NC-2026-07', name: 'Lô Năm Căn · đợt 7', farmer: 0, raised: 418, target: 480, days: 6, harvest: '15/01/2027', expected: '8–14%', status: 'Sắp đủ vốn' },
+  { code: 'CM-DM-2026-03', name: 'Lô Đất Mũi · đợt 3', farmer: 1, raised: 186, target: 320, days: 12, harvest: '28/02/2027', expected: '9–15%', status: 'Đang gọi vốn' },
+  { code: 'CM-NH-2026-05', name: 'Lô Ngọc Hiển · đợt 5', farmer: 2, raised: 60, target: 250, days: 21, harvest: '10/03/2027', expected: '7–12%', status: 'Mới mở' },
+]
+const products = [
+  { id: 'thit', name: 'Cua thịt Y1 yếm vuông', farmer: 0, weight: '400–500 g/con', price: 420000, unit: 'kg', qr: 'CM-NC-2026-06-0042', lot: 'CM-NC-2026-06', seed: '18/05/2026', harvest: '22/09/2026' },
+  { id: 'gach', name: 'Cua gạch Đất Mũi (loại 1)', farmer: 1, weight: '350–450 g/con', price: 690000, unit: 'kg', qr: 'CM-DM-2026-02-0187', lot: 'CM-DM-2026-02', seed: '02/06/2026', harvest: '26/09/2026' },
+  { id: 'com', name: 'Cua cốm', farmer: 2, weight: '250–350 g/con', price: 480000, unit: 'kg', qr: 'CM-NH-2026-04-0113', lot: 'CM-NH-2026-04', seed: '10/06/2026', harvest: '24/09/2026' },
+  { id: 'hop', name: 'Hộp quà cua thượng hạng', farmer: 3, weight: '3 con · khoảng 1,5 kg/hộp', price: 1290000, unit: 'hộp', qr: 'CM-CN-2026-03-0009', lot: 'CM-CN-2026-03', seed: '25/05/2026', harvest: '20/09/2026' },
+]
 const steps = [
-  { number: '1', title: 'Đầu tư cùng CrabShare', detail: 'Lựa chọn batch và mua slot cua tại các trang trại công nghệ cao qua nền tảng CrabShare.' },
-  { number: '2', title: 'Theo dõi minh bạch', detail: 'Hệ thống RAS tự động ghi nhận tăng trưởng, giám sát chất lượng nước, độ mặn và hình ảnh thực tế 24/7.' },
-  { number: '3', title: 'Thu hoạch và chia sẻ doanh thu', detail: 'Cua được thu hoạch và bán qua đối tác của CrabShare và chuỗi nhà hàng; bạn nhận lợi nhuận trực tiếp vào ví đầu tư.' },
+  ['Góp vốn', 'Chọn một lô đang gọi vốn và góp từ 1 triệu đồng. Chi phí chuẩn của lô được công khai trước khi bạn xuống tiền.'],
+  ['Nuôi và theo dõi', 'Người nuôi cập nhật nhật ký, ảnh và số liệu cảm biến mỗi ngày. Bạn xem được ngay trên tài khoản của mình.'],
+  ['Thu hoạch, bán', 'Cua thu hoạch được bán trên cửa hàng CrabShare, mỗi con gắn mã QR truy xuất về đúng lô đã nuôi nó.'],
+  ['Quyết toán', 'Doanh thu trừ chi phí chuẩn, phần còn lại chia theo tỷ lệ vốn góp và chuyển về tài khoản của bạn.'],
 ]
-
+const trust = [
+  ['▣', 'Tiền nằm ở tài khoản riêng của lô', 'Vốn góp được giữ ở tài khoản riêng của từng lô do tổ chức trung gian quản lý.'],
+  ['▤', 'Hợp đồng ký số', 'Mỗi lần góp vốn đi kèm hợp đồng điện tử có chữ ký số, bạn tải về và lưu lại được.'],
+  ['◎', 'Nhật ký lấy thẳng từ trại', 'Ảnh và nhật ký nuôi đồng bộ trực tiếp từ hệ thống tại trại, có dấu thời gian.'],
+  ['▦', 'Mỗi con cua có mã QR', 'Tra mã là biết con cua thuộc lô nào, hộ nào nuôi, thả giống ngày nào.'],
+]
 const faqs = [
-  { question: 'Tôi có thể theo dõi cua của mình như thế nào?', answer: 'Bản demo giới thiệu dashboard theo dõi camera, chỉ số nước và nhật ký tăng trưởng của từng box nuôi.' },
-  { question: 'Lợi nhuận được tính ra sao?', answer: 'Mức lợi nhuận trên giao diện là số liệu minh họa theo thiết kế. Kết quả thực tế phụ thuộc sản lượng thu hoạch và điều khoản hợp đồng.' },
-  { question: 'CrabShare sử dụng công nghệ gì?', answer: 'Thiết kế giới thiệu hệ thống nuôi tuần hoàn RAS, giúp theo dõi môi trường nuôi và quy trình chăm sóc.' },
+  ['Góp vốn tối thiểu bao nhiêu?', 'Mỗi lần góp tối thiểu 1.000.000 ₫. Bạn có thể góp vào nhiều lô khác nhau.'],
+  ['Khi nào tôi nhận được tiền?', 'Sau khi lô thu hoạch, bán xong và được quyết toán. Ngày thu hoạch dự kiến ghi trên từng lô.'],
+  ['Nếu lô bị lỗ thì sao?', 'Phần lỗ chia theo tỷ lệ vốn góp. Mức lỗ tối đa bằng đúng số vốn bạn đã góp.'],
+  ['Tôi có rút vốn giữa chừng được không?', 'Trong lúc lô đang nuôi thì không rút trực tiếp được. Điều kiện cụ thể thể hiện trong hợp đồng.'],
+  ['Tôi tra cứu nguồn gốc cua như thế nào?', 'Nhập mã trên tem QR vào ô tra cứu. Bạn không cần đăng nhập.'],
 ]
-
-type Dialog = 'intro' | 'contact' | 'login' | 'faq' | 'batch' | 'offtake' | null
 
 function App() {
-  const [dialog, setDialog] = useState<Dialog>(null)
-  const [submitted, setSubmitted] = useState(false)
-  const [activeFaq, setActiveFaq] = useState(0)
-  const [testimonial, setTestimonial] = useState(1)
+  const { addToCart } = useDemoSession()
+  const [code, setCode] = useState('')
+  const [searchedCode, setSearchedCode] = useState<string | null>(null)
+  const [mapQuery, setMapQuery] = useState('')
+  const [farmerIndex, setFarmerIndex] = useState(0)
+  const [toast, setToast] = useState('')
+  const match = products.find((product) => product.qr === searchedCode)
+  const lookup = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSearchedCode(code.trim().toUpperCase()) }
+  const notify = (message: string) => { setToast(message); window.setTimeout(() => setToast(''), 2500) }
 
-  const openDialog = (next: Dialog) => {
-    setSubmitted(false)
-    setDialog(next)
-  }
-
-  const closeDialog = () => setDialog(null)
-
-  const submitContact = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSubmitted(true)
-  }
-
-  return (
-    <div className="min-h-screen bg-white text-[#171717]">
-      <header id="dau-trang" className="hero relative isolate flex min-h-[780px] flex-col text-white">
-        <div className="hero-shade absolute inset-0 -z-10" />
-        <SiteHeader variant="overlay" />
-
-        <div className="page-container flex flex-1 items-center justify-between gap-12 pb-[97px] pt-10">
-          <div className="max-w-[680px]">
-            <h1 className="max-w-[600px] text-[clamp(2.7rem,4.2vw,3.375rem)] font-extrabold leading-[1] tracking-[-0.025em]">
-              Bạn đầu tư, chúng<br className="hidden sm:block" /> tôi nuôi cua, bạn<br className="hidden sm:block" /> nhận doanh thu.
-            </h1>
-            <p className="mt-6 max-w-[540px] text-[15px] leading-6 text-gray-300 md:text-base">
-              Mô hình chia sẻ doanh thu minh bạch từ hệ thống nuôi cua trong nhà tuần hoàn RAS (Recirculating Aquaculture System). Đầu tư từng box cua, giám sát 24/7 và nhận lợi nhuận trực tiếp khi thu hoạch.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a href="#goi-dau-tu" className="pill-button border border-white/20 bg-black/90 px-7 py-3 text-xs shadow-lg">CÁC GÓI ĐẦU TƯ</a>
-              <a href="#ve-chung-toi" className="pill-button border border-white/50 px-7 py-3 text-xs">CÂU CHUYỆN</a>
-            </div>
-          </div>
-          <button onClick={() => openDialog('intro')} className="hidden h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-white/60 bg-black/30 backdrop-blur-sm transition hover:scale-105 md:flex" aria-label="Giới thiệu CrabShare">
-            <img src={asset('imgContainer2.svg')} alt="" />
-          </button>
-        </div>
-
-        <div className="absolute inset-x-0 bottom-0 bg-[#916026]">
-          <div className="page-container grid min-h-[97px] grid-cols-2 items-center gap-4 py-4 md:grid-cols-4">
-            <div className="metric"><strong>+50.000+</strong><span>HỘP CUA ĐÃ CUNG CẤP</span></div>
-            <div className="metric"><strong>50+</strong><span>BATCH ĐÃ TÀI TRỢ HOÀN TẤT</span></div>
-            <div className="metric"><strong>ĐẠT CHUẨN</strong><span>VIETGAP & HACCP</span></div>
-            <div className="metric"><strong>35+</strong><span>ĐỐI TÁC TRẠI & BAO TIÊU</span></div>
-          </div>
-        </div>
-      </header>
-
-      <section id="quy-trinh" className="bg-[#fff1e0] py-20 md:py-24">
-        <div className="page-container grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <h2 className="section-title">Quy trình vận hành</h2>
-            <p className="mt-5 max-w-[520px] text-sm leading-6 text-gray-600">Nền tảng CrabShare kết nối bạn với các trang trại nuôi cua tuần hoàn RAS hiện đại, quản lý tự động và chia sẻ doanh thu minh bạch.</p>
-            <ol className="mt-10 space-y-6">
-              {steps.map((step) => (
-                <li key={step.number} className="flex gap-4">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-[#e6cba9] bg-white text-[11px] font-bold">{step.number}</span>
-                  <div>
-                    <h3 className="text-sm font-bold">{step.title}</h3>
-                    <p className="mt-1 max-w-[470px] text-[13px] leading-5 text-gray-600">{step.detail}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a href="#ve-chung-toi" className="pill-button bg-black px-6 py-3 text-[11px] text-white">TÌM HIỂU THÊM</a>
-              <button onClick={() => openDialog('faq')} className="pill-button border border-gray-400 px-6 py-3 text-[11px]">HỎI ĐÁP</button>
-            </div>
-          </div>
-          <div className="process-diagram mx-auto">
-            <img className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" src={asset('imgContainer4.svg')} alt="" />
-            <div className="process-core"><strong>CRAB<br />SHARE</strong><img src={asset('imgContainer8.svg')} alt="" /></div>
-            <div className="process-point process-top"><span><img src={asset('imgContainer5.svg')} alt="" /></span><b>Nhà đầu tư</b></div>
-            <div className="process-point process-left"><span><img src={asset('imgContainer6.svg')} alt="" /></span><b>Trại nuôi RAS</b></div>
-            <div className="process-point process-right"><span><img src={asset('imgContainer7.svg')} alt="" /></span><b>Thị trường / Cửa hàng</b></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="goi-dau-tu" className="bg-white px-4 py-20 md:py-24">
-        <div className="mx-auto max-w-[1024px]">
-          <h2 className="section-title text-center">Các gói đầu tư CrabShare</h2>
-          <div className="mt-7 overflow-x-auto rounded-xl border border-amber-100 bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.22)]">
-            <table className="w-full min-w-[760px] border-collapse text-sm">
-              <thead>
-                <tr className="h-[154px] text-center">
-                  <th className="w-1/4 p-6 align-bottom">
-                    <span className="inline-flex items-center gap-2 text-left text-[9px] font-bold leading-[1.05]">CRAB<br />SHARE<br />VIETNAM<img src={asset('imgContainer.svg')} alt="" /></span>
-                  </th>
-                  <th className="w-[37.5%] border-x border-white/60 bg-[#f7e7d2] p-5">
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="rounded bg-[#e9d4bc] px-2 py-1 text-[9px] tracking-wider">PHỔ BIẾN</span>
-                      <img src={asset('imgContainer1.svg')} alt="" />
-                      <strong className="text-[14px] tracking-wide">BATCH SLOT</strong>
-                      <small className="text-[11px] font-medium text-gray-700">(HỘP NUÔI ĐƠN LẺ)</small>
-                    </div>
-                  </th>
-                  <th className="w-[37.5%] p-5">
-                    <div className="flex flex-col items-center gap-2">
-                      <img src={asset('imgSymbol.svg')} alt="" />
-                      <strong className="text-[14px] tracking-wide">OFFTAKE PRIORITY</strong>
-                      <small className="text-[11px] font-medium text-gray-700">(BAO TIÊU & ĐẦU TƯ)</small>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {packages.map((row, index) => (
-                  <tr key={row.label} className={index % 2 === 0 ? 'bg-[#faf2e9]' : 'bg-white'}>
-                    <th scope="row" className="w-1/4 border-y border-amber-100 px-4 py-4 text-left font-bold">{row.label}</th>
-                    <td className="w-[37.5%] border-x border-y border-amber-100 px-4 py-4 text-center">{row.link ? <button onClick={() => openDialog('batch')} className="font-semibold underline underline-offset-2">{row.first}</button> : row.first}</td>
-                    <td className="w-[37.5%] border-y border-amber-100 px-4 py-4 text-center">{row.link ? <button onClick={() => openDialog('offtake')} className="font-semibold underline underline-offset-2">{row.second}</button> : row.second}</td>
-                  </tr>
-                ))}
-                <tr className="text-center">
-                  <td className="bg-[#faf2e9]" />
-                  <td className="border-x border-amber-100 p-4"><button onClick={() => openDialog('batch')} className="pill-button bg-[#8e5d28] px-6 py-2.5 text-[11px] text-white">XEM CHI TIẾT</button></td>
-                  <td className="p-4"><button onClick={() => openDialog('offtake')} className="pill-button bg-black px-6 py-2.5 text-[11px] text-white">XEM CHI TIẾT</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-5 text-center text-xs leading-5 text-gray-500">*Lợi nhuận dựa trên sản lượng thu hoạch thực tế và cam kết mua lại tối thiểu từ chuỗi bao tiêu.</p>
-        </div>
-      </section>
-
-      <section id="ve-chung-toi" className="bg-[#f7f5f1] py-20 md:py-24">
-        <div className="page-container grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-          <div>
-            <p className="eyebrow">Ý KIẾN NHÀ ĐẦU TƯ:</p>
-            <blockquote className="mt-3 max-w-[620px] text-[clamp(1.8rem,3vw,2.5rem)] font-extrabold leading-[1.12] tracking-tight">
-              {testimonial === 1 ? '“Hệ thống camera và nhật ký nước RAS cập nhật mỗi ngày giúp tôi hoàn toàn an tâm.”' : testimonial === 0 ? '“Mọi thông tin về từng box cua đều rõ ràng, tôi dễ dàng theo dõi hành trình đầu tư.”' : '“Tôi đánh giá cao cách CrabShare kết nối nhà đầu tư với trại nuôi và đầu ra.”'}
-            </blockquote>
-            <p className="mt-5 max-w-[570px] text-sm leading-6 text-gray-600">“Một mô hình đầu tư nông nghiệp công nghệ cao bài bản, kiểm soát rủi ro bằng công nghệ tuần hoàn và đầu ra chuỗi ẩm thực vững chắc.”</p>
-            <div className="mt-8 flex items-center gap-4">
-              <img className="h-12 w-12 rounded-full border border-amber-300 object-cover" src={asset('imgTrnHoangNam.png')} alt="Trần Hoàng Nam" />
-              <div><strong className="block text-sm">Trần Hoàng Nam</strong><span className="text-[10px] font-semibold tracking-wide text-gray-500">NHÀ ĐẦU TƯ BATCH #04 & CHỦ CHUỖI NHÀ HÀNG HẢI SẢN</span></div>
-            </div>
-            <div className="mt-8 flex items-center gap-2" aria-label="Chọn đánh giá">
-              {[0, 1, 2].map((index) => <button key={index} onClick={() => setTestimonial(index)} aria-label={`Đánh giá ${index + 1}`} aria-current={testimonial === index} className={`rounded-full transition-all ${testimonial === index ? 'h-2.5 w-2.5 bg-black' : 'h-1.5 w-1.5 bg-gray-400'}`} />)}
-            </div>
-          </div>
-          <div className="feedback-gallery relative mx-auto h-[410px] w-full max-w-[410px] overflow-hidden rounded-2xl border border-white shadow-xl">
-            <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/45 to-transparent" />
-          </div>
-        </div>
-      </section>
-
-      <section id="ung-dung" className="bg-[#f9f8f6] py-20 md:py-24">
-        <div className="page-container grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <h2 className="section-title max-w-[450px] !text-[clamp(2.2rem,3.5vw,3rem)] !leading-[1.08]">Đầu tư và theo dõi cua trong 3 phút.</h2>
-            <p className="mt-6 max-w-[430px] text-sm leading-6 text-gray-600">Ứng dụng CrabShare giúp bạn chọn mua slot cua, theo dõi camera và chỉ số sinh học của box nuôi, đồng thời mua hải sản tươi sống giao tận nhà với giá ưu đãi cho cổ đông.</p>
-            <button onClick={() => openDialog('contact')} className="pill-button mt-8 bg-black px-8 py-3.5 text-[11px] text-white shadow-lg">TẢI ỨNG DỤNG ĐẦU TƯ</button>
-          </div>
-          <div className="relative mx-auto w-full max-w-[596px] pb-5 pr-1 md:pr-14">
-            <div className="dashboard overflow-hidden rounded-xl border border-gray-300 bg-white shadow-xl">
-              <div className="flex h-10 items-center justify-between border-b border-gray-200 px-3 text-[10px] font-semibold"><span>CrabShare App™ - Dashboard Báo Cáo</span><span className="flex gap-1"><i /><i /><i /></span></div>
-              <div className="grid min-h-[280px] grid-cols-3 items-center gap-3 px-4">
-                <div className="dashboard-card"><strong>SLOT CUA THỊT</strong><span>2.500.000 ₫</span></div>
-                <div className="dashboard-card"><strong>SLOT CUA CỐM</strong><span>3.200.000 ₫</span></div>
-                <div className="dashboard-card"><strong>GÓI TRẠI 50 BOX</strong><span>50.000.000 ₫</span></div>
-              </div>
-              <div className="border-t border-gray-200 bg-gray-50 px-4 py-2 text-center text-[9px] text-gray-500">Giám sát trực tiếp nhiệt độ, độ mặn 24/7 & Thanh toán bảo mật</div>
-            </div>
-            <div className="mx-auto h-3 w-[104%] -translate-x-[2%] rounded-b-2xl bg-gray-300 shadow-md" />
-            <div className="phone absolute bottom-0 right-0 hidden h-[336px] w-[176px] rounded-[22px] border-[8px] border-gray-800 bg-white shadow-2xl md:flex">
-              <div className="flex w-full flex-col items-center justify-between overflow-hidden rounded-[13px] p-3">
-                <div className="h-1 w-8 rounded-full bg-gray-300" />
-                <div className="flex flex-col items-center gap-2 text-center"><img src={asset('imgSymbol1.svg')} alt="" /><strong className="text-[10px]">HỘP CUA #084</strong><span className="rounded-full bg-amber-100 px-2 py-1 text-[9px]">Đang Tăng Trưởng</span></div>
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-gray-100"><img src={asset('imgContainer9.svg')} alt="" /></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="relative bg-white pt-6">
-        <section className="question-card page-container relative z-10 mx-auto -mb-8 max-w-[960px] overflow-hidden rounded-2xl py-10 text-center text-white shadow-2xl">
-          <div className="absolute inset-0 -z-10 bg-black/50" />
-          <h2 className="text-[30px] font-extrabold tracking-tight">Bạn có câu hỏi?</h2>
-          <div className="mt-5 flex flex-wrap justify-center gap-4">
-            <button onClick={() => openDialog('contact')} className="pill-button border border-white/20 bg-black px-7 py-3 text-xs text-white">YÊU CẦU GỌI LẠI</button>
-            <button onClick={() => openDialog('faq')} className="pill-button border border-white/60 px-7 py-3 text-xs text-white">HỎI ĐÁP</button>
-          </div>
-        </section>
-        <section id="dang-ky" className="bg-[#916026] px-4 pb-12 pt-20 text-white">
-          <div className="mx-auto flex max-w-[960px] flex-col items-center justify-center gap-5 text-center md:flex-row">
-            <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">Đăng ký để bắt đầu đầu tư ngay hôm nay</h2>
-            <a href="/dang-ky" className="pill-button shrink-0 bg-black px-8 py-3 text-xs">ĐĂNG KÝ</a>
-          </div>
-        </section>
-      </div>
-
-      <SiteFooter />
-
-      {dialog && (
-        <div className="dialog-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog() }}>
-          <section className="dialog-panel" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-            <button className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-gray-100 text-xl" onClick={closeDialog} aria-label="Đóng">×</button>
-            {dialog === 'contact' && <>
-              <h2 id="dialog-title" className="text-2xl font-extrabold">Đăng ký tư vấn</h2>
-              {submitted ? <p className="mt-5 rounded-xl bg-green-50 p-4 text-sm text-green-800">Cảm ơn bạn! Đây là bản demo giao diện; thông tin chưa được gửi đến máy chủ.</p> : <>
-                <p className="mt-2 text-sm text-gray-600">Để lại thông tin để trải nghiệm biểu mẫu CrabShare.</p>
-                <form onSubmit={submitContact} className="mt-6 space-y-4">
-                  <label className="block text-sm font-semibold">Họ và tên<input required autoComplete="name" className="form-input" placeholder="Nguyễn Văn A" /></label>
-                  <label className="block text-sm font-semibold">Số điện thoại<input required type="tel" autoComplete="tel" pattern="[0-9+ .-]{9,15}" className="form-input" placeholder="090 123 4567" /></label>
-                  <button className="pill-button w-full bg-black px-6 py-3 text-xs text-white" type="submit">GỬI THÔNG TIN</button>
-                </form>
-              </>}
-            </>}
-            {dialog === 'login' && <>
-              <h2 id="dialog-title" className="text-2xl font-extrabold">Đăng nhập CrabShare</h2>
-              <p className="mt-2 text-sm text-gray-600">Minh họa giao diện đăng nhập cho bản demo.</p>
-              <form onSubmit={submitContact} className="mt-6 space-y-4">
-                <label className="block text-sm font-semibold">Email<input required type="email" autoComplete="email" className="form-input" placeholder="you@example.com" /></label>
-                <label className="block text-sm font-semibold">Mật khẩu<input required type="password" autoComplete="current-password" className="form-input" placeholder="••••••••" /></label>
-                <button className="pill-button w-full bg-black px-6 py-3 text-xs text-white" type="submit">ĐĂNG NHẬP</button>
-              </form>
-              {submitted && <p className="mt-4 text-sm text-amber-800">Tính năng đăng nhập cần kết nối backend để hoạt động.</p>}
-            </>}
-            {dialog === 'intro' && <>
-              <h2 id="dialog-title" className="text-2xl font-extrabold">CrabShare hoạt động như thế nào?</h2>
-              <p className="mt-4 text-sm leading-6 text-gray-600">Chọn gói đầu tư, theo dõi box cua qua dashboard, sau đó nhận chia sẻ doanh thu khi thu hoạch. Video giới thiệu sẽ được bổ sung cho bản demo.</p>
-              <a href="#quy-trinh" onClick={closeDialog} className="pill-button mt-6 inline-flex bg-black px-6 py-3 text-xs text-white">XEM QUY TRÌNH</a>
-            </>}
-            {dialog === 'faq' && <>
-              <h2 id="dialog-title" className="text-2xl font-extrabold">Hỏi đáp thường gặp</h2>
-              <div className="mt-5 divide-y divide-gray-200">
-                {faqs.map((faq, index) => <div key={faq.question} className="py-3"><button className="flex w-full items-center justify-between gap-4 text-left text-sm font-bold" onClick={() => setActiveFaq(index)} aria-expanded={activeFaq === index}>{faq.question}<span>{activeFaq === index ? '−' : '+'}</span></button>{activeFaq === index && <p className="mt-2 text-sm leading-6 text-gray-600">{faq.answer}</p>}</div>)}
-              </div>
-            </>}
-            {(dialog === 'batch' || dialog === 'offtake') && <>
-              <h2 id="dialog-title" className="text-2xl font-extrabold">{dialog === 'batch' ? 'Batch Slot' : 'Offtake Priority'}</h2>
-              <p className="mt-3 text-sm leading-6 text-gray-600">{dialog === 'batch' ? 'Gói đầu tư từng hộp nuôi đơn lẻ với chu kỳ dự kiến 45–60 ngày, mức đầu tư minh họa 2.500.000 ₫.' : 'Gói bao tiêu và đầu tư với chu kỳ dự kiến 6 tháng–1 năm, mức đầu tư minh họa 50.000.000 ₫.'}</p>
-              <p className="mt-3 text-xs text-gray-500">Số liệu theo thiết kế Figma, phục vụ trình diễn giao diện.</p>
-              <button onClick={() => openDialog('contact')} className="pill-button mt-6 bg-black px-6 py-3 text-xs text-white">ĐĂNG KÝ TƯ VẤN</button>
-            </>}
-          </section>
-        </div>
-      )}
-    </div>
-  )
+  return <div className="mh-home" id="dau-trang"><SiteHeader />
+    <section className="mh-hero"><div><span className="mh-kicker">Nền tảng góp vốn & truy xuất cua Cà Mau</span><h1>Góp vốn nuôi cua Cà Mau.<br />Mua cua có nguồn gốc rõ ràng.</h1><p>CrabShare dành cho hai nhóm: <b>nhà đầu tư</b> muốn góp vốn vào từng lô nuôi cụ thể và theo dõi nó mỗi ngày, và <b>người mua</b> muốn biết con cua mình ăn đến từ đầm nào, ai nuôi.</p><div className="mh-actions"><a className="mh-button solid" href="#lo-goi-von">Tôi muốn đầu tư</a><a className="mh-button ghost" href="#cua-hang">Tôi muốn mua cua</a></div></div></section>
+    <section className="mh-kpis" aria-label="CrabShare qua các con số">{[['Lô đã quyết toán', '12', 'lô'], ['Tổng vốn đã góp', '4,8', 'tỷ ₫'], ['Cua đã bán', '38.500', 'kg'], ['Hộ nuôi liên kết', '57', 'hộ']].map(([label, value, unit]) => <div key={label}><span>{label}</span><strong>{value} <small>{unit}</small></strong></div>)}</section>
+    <main>
+      <section className="mh-section" id="cach-hoat-dong"><span className="mh-eyebrow">CÁCH HOẠT ĐỘNG</span><h2>Bốn bước của một lô nuôi</h2><ol className="mh-steps">{steps.map(([title, body], i) => <li key={title}><span>{i + 1}</span><h3>{title}</h3><p>{body}</p></li>)}</ol></section>
+      <section className="mh-section mh-white" id="lo-goi-von"><div className="mh-section-head"><div><span className="mh-eyebrow">DÀNH CHO NHÀ ĐẦU TƯ</span><h2>Lô đang gọi vốn</h2><p>Góp từ 1.000.000 ₫ vào một lô nuôi cụ thể, biết rõ đầm nào, hộ nào nuôi.</p></div><a className="mh-button outline" href="/dang-ky">Bắt đầu đầu tư</a></div><div className="mh-lots">{lots.map((lot) => { const pct = Math.round(lot.raised / lot.target * 100); const farmer = farmers[lot.farmer]; return <article key={lot.code}><div className="mh-lot-top"><span>{lot.code}</span><b>{lot.status}</b></div><h3>{lot.name}</h3><p>{farmer.pond} · hộ {farmer.name}</p><div className="mh-progress-head"><strong>{lot.raised} triệu ₫ <small>/ {lot.target} triệu ₫</small></strong><b>{pct}%</b></div><div className="mh-progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div><p className="mh-progress-caption">Vốn tối thiểu 60% · Mốc 90%</p><dl><div><dt>Còn lại</dt><dd>{lot.days} ngày</dd></div><div><dt>Thu hoạch dự kiến</dt><dd>{lot.harvest}</dd></div><div><dt>Góp tối thiểu</dt><dd>1.000.000 ₫</dd></div><div><dt>Lợi nhuận kỳ vọng</dt><dd>{lot.expected}/vụ</dd></div></dl><a className="mh-button solid" href="/dang-ky">Xem chi tiết lô</a></article> })}</div><p className="mh-risk"><b>Đầu tư có thể lỗ, tối đa bằng số vốn bạn đã góp.</b> Lợi nhuận kỳ vọng không phải cam kết. <a href="#hoi-dap">Tìm hiểu rủi ro</a></p></section>
+      <section className="mh-section" id="vi-sao"><span className="mh-eyebrow">VÌ SAO TIN ĐƯỢC</span><h2>Bạn không phải tin lời, bạn kiểm tra được</h2><div className="mh-trust">{trust.map(([icon, title, body]) => <article key={title}><span>{icon}</span><h3>{title}</h3><p>{body}</p></article>)}</div></section>
+      <section className="mh-section mh-white" id="cua-hang"><div className="mh-section-head"><div><span className="mh-eyebrow">DÀNH CHO NGƯỜI MUA</span><h2>Cua sống Cà Mau</h2><p>Cua từ các đầm đối tác, con nào cũng có mã truy xuất về đúng lô nuôi.</p></div><a className="mh-button outline" href="/cua-hang">Xem cửa hàng</a></div><div className="mh-products">{products.map((product) => { const farmer = farmers[product.farmer]; return <article key={product.id}><div className="mh-product-photo"><span>CrabShare · {farmer.pond}</span><img src={photo(`cua-${product.id}-card.jpg`)} alt={product.name} /></div><div className="mh-farmer-line"><i>{farmer.name.split(' ').slice(-2).map((part) => part[0]).join('')}</i><span><b>{farmer.name}</b><small>Hộ nuôi · {farmer.pond}</small></span></div><h3>{product.name}</h3><p>Trọng lượng: {product.weight}</p><button className="mh-text-link" onClick={() => { setCode(product.qr); setSearchedCode(product.qr); document.getElementById('tra-cuu')?.scrollIntoView({ behavior: 'smooth' }) }}>Tra nguồn gốc mẫu</button><strong>{money(product.price)} <small>/{product.unit}</small></strong><div className="mh-product-actions"><button className="mh-button outline" onClick={() => { addToCart(); notify(`Đã thêm ${product.name} vào giỏ`) }}>Thêm vào giỏ</button><a className="mh-button solid" href="/san-pham">Xem sản phẩm</a></div></article> })}</div></section>
+      <section className="mh-section mh-lookup" id="tra-cuu"><img src={photo('truy-xuat.png')} alt="Tem truy xuất đặt cạnh cua" /><div><span className="mh-eyebrow">TRA CỨU NGUỒN GỐC</span><h2>Con cua của bạn đến từ đâu?</h2><p>Quét mã QR trên tem bằng camera điện thoại, hoặc nhập mã in bên dưới tem. Không cần đăng nhập.</p><form onSubmit={lookup}><label htmlFor="mh-code">Mã truy xuất</label><div><input id="mh-code" value={code} onChange={(event) => setCode(event.target.value)} placeholder="VD: CM-DM-2026-02-0187" /><button className="mh-button solid">Tra cứu</button></div></form><p className="mh-samples">Thử mã mẫu: {products.slice(0, 2).map((product) => <button key={product.qr} onClick={() => { setCode(product.qr); setSearchedCode(product.qr) }}>{product.qr}</button>)}</p>{searchedCode && (match ? <div className="mh-lookup-result"><b>✓ Mã truy xuất hợp lệ</b><h3>{match.name}</h3><dl><dt>Lô nuôi</dt><dd>{match.lot}</dd><dt>Hộ nuôi</dt><dd>{farmers[match.farmer].name}</dd><dt>Thả giống</dt><dd>{match.seed}</dd><dt>Thu hoạch</dt><dd>{match.harvest}</dd></dl></div> : <p className="mh-lookup-error">Không tìm thấy mã {searchedCode}. Vui lòng kiểm tra lại tem.</p>)}</div></section>
+      <section className="mh-section mh-hub" id="nguoi-nuoi"><span className="mh-eyebrow">NGƯỜI NUÔI</span><h2>Những hộ nuôi đứng sau mỗi lô</h2><p>Mỗi ghim trên bản đồ là một đầm đối tác. Chọn một đầm để xem hộ nuôi.</p><div className="mh-hub-grid"><div className="mh-map"><input aria-label="Tìm đầm nuôi" value={mapQuery} onChange={(event) => setMapQuery(event.target.value)} placeholder="Tìm đầm nuôi…" /><div className="mh-map-pins">{farmers.map((farmer, i) => `${farmer.name} ${farmer.pond}`.toLowerCase().includes(mapQuery.toLowerCase()) && <button key={farmer.name} className={i === farmerIndex ? 'selected' : ''} style={{ left: `${farmer.x}%`, top: `${farmer.y}%` }} onClick={() => setFarmerIndex(i)}>◆<small>{farmer.pond}</small></button>)}</div><span>Sơ đồ minh hoạ · không theo tỷ lệ</span></div><div className="mh-farmer-cards">{[farmers[farmerIndex], farmers[farmerIndex === 0 ? 1 : 0]].map((farmer) => <article key={farmer.name}><div className="mh-farmer-photo">{farmer === farmers[0] ? <img src={photo('farmer.png')} alt={farmer.name} /> : <span>{farmer.name.split(' ').slice(-2).map((part) => part[0]).join('')}</span>}</div><div><h3>{farmer.name}</h3><p>Hộ nuôi · {farmer.pond}</p><p>Đã thu <b>{farmer.harvest}</b> qua {farmer.ponds} đầm</p><a href="/dang-ky" className="mh-button outline">Xem lô đang gọi vốn</a></div></article>)}</div></div><aside className="mh-invite"><div><b>Bạn là người nuôi cua?</b><span>Đăng ký gọi vốn cho lô của bạn, CrabShare hỗ trợ lập chi phí chuẩn và bán cua sau thu hoạch.</span></div><a className="mh-button solid" href="/dang-ky">Đăng ký gọi vốn</a></aside></section>
+      <section className="mh-section" id="hoi-dap"><span className="mh-eyebrow">HỎI ĐÁP</span><h2>Câu hỏi thường gặp</h2><div className="mh-faq">{faqs.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></section>
+    </main><p className="mh-credit">Ảnh cua minh hoạ từ Wikimedia Commons, tác giả Wibowo Djatmiko và Judgefloro · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.vi">CC BY-SA 4.0</a>.</p><SiteFooter /><div className={`mh-toast ${toast ? 'visible' : ''}`} role="status">{toast}</div>
+  </div>
 }
 
 export default App
