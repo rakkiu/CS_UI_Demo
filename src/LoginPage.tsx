@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { SiteFooter, SiteHeader } from './SiteChrome'
+import { useDemoSession } from './DemoSession'
 
 const asset = (name: string) => `/assets/${name}`
 
@@ -8,6 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
+  const { signIn: saveSession } = useDemoSession()
 
   const signIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -15,7 +17,8 @@ function LoginPage() {
       setMessage('Vui lòng nhập email và mật khẩu.')
       return
     }
-    setMessage('Đăng nhập demo thành công. Kết nối backend để xác thực tài khoản thật.')
+    saveSession()
+    window.location.assign('/')
   }
 
   return (

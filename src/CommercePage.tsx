@@ -1,0 +1,30 @@
+import { useState } from 'react'
+import { SiteFooter, SiteHeader } from './SiteChrome'
+import { useDemoSession } from './DemoSession'
+
+const asset = (name: string) => `/assets/${name}`
+const pageData: Record<string, { title: string; subtitle: string }> = {
+  '/gio-hang': { title: 'Giỏ hàng', subtitle: 'Kiểm tra sản phẩm trước khi thanh toán' },
+  '/thanh-toan': { title: 'Thanh toán', subtitle: 'Thông tin giao hàng và phương thức thanh toán' },
+  '/xac-nhan-don-hang': { title: 'Xác nhận đơn hàng', subtitle: 'Đơn hàng #CS-240826 đã được tiếp nhận' },
+  '/theo-doi-don-hang': { title: 'Theo dõi đơn hàng', subtitle: 'Đơn hàng #CS-240826 đang được chuẩn bị' },
+  '/lich-su-don-hang': { title: 'Lịch sử đơn hàng', subtitle: 'Các đơn hàng gần đây của bạn' },
+  '/huy-tra-hang': { title: 'Yêu cầu huỷ / trả hàng', subtitle: 'Đơn hàng #CS-240826 · Cua Gạch Son Cà Mau' },
+  '/danh-gia-don-hang': { title: 'Đánh giá đơn hàng', subtitle: 'Hãy chia sẻ trải nghiệm mua hàng của bạn' },
+  '/san-pham': { title: 'Cua Gạch Son Cà Mau — Chuẩn RAS Thượng Hạng', subtitle: 'Sản phẩm thu hoạch từ Batch #CR-0142' },
+}
+
+function ProductRow() { return <div className="commerce-product"><img src={asset('storeCrab.png')} alt="Cua Gạch Son Cà Mau" /><div><strong>Cua Gạch Son Cà Mau — Chuẩn RAS Thượng Hạng</strong><p>Loại 1 · Vừa (450g) · Batch #CR-0142</p></div><b>490.000 đ</b></div> }
+
+export default function CommercePage() {
+  const path = window.location.pathname
+  const { title, subtitle } = pageData[path] ?? pageData['/gio-hang']
+  const { cartCount, addToCart, clearCart, signedIn } = useDemoSession()
+  const [submitted, setSubmitted] = useState(false)
+  const isCart = path === '/gio-hang'; const isCheckout = path === '/thanh-toan'; const isProduct = path === '/san-pham'
+  const isTracking = path === '/theo-doi-don-hang' || path === '/xac-nhan-don-hang'; const isHistory = path === '/lich-su-don-hang'
+  return <><SiteHeader /><main className="commerce-page"><div className="commerce-wrap"><p className="commerce-breadcrumb"><a href="/">TRANG CHỦ</a> / <span>{title.toUpperCase()}</span></p><h1>{title}</h1><p className="commerce-subtitle">{subtitle}</p>
+    {isProduct ? <section className="commerce-detail"><img src={asset('storeCrab.png')} alt="Cua Gạch Son Cà Mau" /><div><span className="commerce-badge">LOẠI 1 · 450G</span><h2>Cua gạch tươi sống, nuôi tuần hoàn RAS</h2><p>Minh bạch nguồn gốc, giao trong ngày tại TP. Hồ Chí Minh.</p><strong className="commerce-price">490.000 đ</strong><button className="commerce-button" onClick={addToCart}>THÊM VÀO GIỎ</button></div></section> : isCart ? <section className="commerce-grid"><div className="commerce-card">{cartCount ? <><ProductRow /><div className="commerce-actions"><button onClick={clearCart}>Xoá giỏ hàng</button><a className="commerce-button" href="/thanh-toan">THANH TOÁN</a></div></> : <p>Giỏ hàng đang trống. <a href="/cua-hang">Khám phá cửa hàng</a></p>}</div><aside className="commerce-summary"><h2>Tóm tắt đơn hàng</h2><p>Tạm tính <b>{cartCount * 490000 || 0} đ</b></p><p>Phí giao hàng <b>Miễn phí</b></p><strong>Tổng cộng <b>{cartCount * 490000 || 0} đ</b></strong></aside></section> : isCheckout ? <section className="commerce-grid"><form className="commerce-card" onSubmit={(e) => { e.preventDefault(); clearCart(); window.location.assign('/xac-nhan-don-hang') }}><h2>Thông tin nhận hàng</h2><input required placeholder="Họ và tên" /><input required placeholder="Số điện thoại" /><input required placeholder="Địa chỉ giao hàng" /><label className="commerce-radio"><input type="radio" defaultChecked name="payment" /> Thanh toán khi nhận hàng</label><label className="commerce-radio"><input type="radio" name="payment" /> Chuyển khoản ngân hàng</label><button className="commerce-button">ĐẶT HÀNG</button></form><aside className="commerce-summary"><h2>Đơn hàng</h2><ProductRow /><strong>Tổng cộng <b>490.000 đ</b></strong></aside></section> : isTracking ? <section className="commerce-card commerce-centered"><div className="commerce-status">✓</div><h2>{path === '/xac-nhan-don-hang' ? 'Đặt hàng thành công!' : 'Đơn hàng đang được giao đến bạn'}</h2><p>{subtitle}</p><div className="commerce-steps"><b>Đã xác nhận</b><b>Đang chuẩn bị</b><b>Đang giao</b><b>Hoàn thành</b></div><a className="commerce-button" href="/theo-doi-don-hang">THEO DÕI ĐƠN HÀNG</a></section> : isHistory ? <section className="commerce-card"><div className="commerce-tabs"><b>TẤT CẢ</b><span>ĐANG XỬ LÝ</span><span>HOÀN THÀNH</span></div><ProductRow /><div className="commerce-actions"><span>Đã giao thành công</span><a href="/danh-gia-don-hang">ĐÁNH GIÁ</a><a href="/huy-tra-hang">YÊU CẦU TRẢ HÀNG</a></div></section> : <section className="commerce-card commerce-centered"><h2>{submitted ? 'Cảm ơn đánh giá của bạn!' : title}</h2><p>{subtitle}</p><div className="commerce-stars">★★★★★</div><textarea placeholder="Viết nhận xét của bạn" /><button className="commerce-button" onClick={() => setSubmitted(true)}>{path === '/huy-tra-hang' ? 'GỬI YÊU CẦU' : 'GỬI ĐÁNH GIÁ'}</button></section>}
+    {!signedIn && !isProduct && <p className="commerce-login-note">Đăng nhập demo để xem hồ sơ và giỏ hàng trên header.</p>}
+  </div></main><SiteFooter /></>
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDemoSession } from './DemoSession'
 
 const asset = (name: string) => `/assets/${name}`
 
@@ -14,6 +15,7 @@ type SiteHeaderProps = { variant?: 'overlay' | 'solid' }
 
 export function SiteHeader({ variant = 'solid' }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { signedIn, cartCount, signOut } = useDemoSession()
   const isOverlay = variant === 'overlay'
 
   return (
@@ -26,7 +28,7 @@ export function SiteHeader({ variant = 'solid' }: SiteHeaderProps) {
         <div className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => <a key={item.label} className="nav-link" href={item.href}>{item.label}{item.dropdown && <img src={asset('imgContainer3.svg')} alt="" />}</a>)}
         </div>
-        <div className="hidden items-center gap-3 lg:flex"><a className="pill-button border border-white/50 px-5 py-2 text-[11px]" href="/dang-nhap">ĐĂNG NHẬP</a><a className="pill-button bg-white px-5 py-2 text-[11px] text-black" href="/dang-ky">ĐĂNG KÝ</a></div>
+        <div className="hidden items-center gap-3 lg:flex">{signedIn ? <><a className="pill-button border border-white/50 px-4 py-2 text-[11px]" href="/gio-hang">GIỎ HÀNG ({cartCount})</a><details className="relative"><summary className="cursor-pointer list-none rounded-full bg-white px-4 py-2 text-[11px] font-bold text-black">👤 NGUYỄN AN</summary><div className="absolute right-0 mt-2 w-40 rounded-xl bg-white p-3 text-xs text-[#171717] shadow-xl"><a className="block py-2" href="/lich-su-don-hang">Đơn hàng của tôi</a><button className="pt-2 text-[#8b5023]" onClick={signOut}>Đăng xuất</button></div></details></> : <><a className="pill-button border border-white/50 px-5 py-2 text-[11px]" href="/dang-nhap">ĐĂNG NHẬP</a><a className="pill-button bg-white px-5 py-2 text-[11px] text-black" href="/dang-ky">ĐĂNG KÝ</a></>}</div>
         <button className="rounded-full border border-white/50 px-4 py-2 text-xs font-bold lg:hidden" onClick={() => setMenuOpen((current) => !current)} aria-expanded={menuOpen} aria-controls="mobile-menu">{menuOpen ? 'ĐÓNG' : 'MENU'}</button>
       </nav>
       {menuOpen && <div id="mobile-menu" className="page-container absolute inset-x-0 top-full z-40"><div className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-[#171717] p-5 shadow-2xl">{navItems.map((item) => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="py-2 text-xs font-semibold tracking-wider">{item.label}</a>)}<div className="mt-2 flex gap-2"><a className="pill-button border border-white/40 px-4 py-2 text-xs" href="/dang-nhap">ĐĂNG NHẬP</a><a className="pill-button bg-white px-4 py-2 text-xs text-black" href="/dang-ky">ĐĂNG KÝ</a></div></div></div>}

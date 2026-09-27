@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { SiteFooter, SiteHeader } from './SiteChrome'
+import { useDemoSession } from './DemoSession'
 
 const asset = (name: string) => `/assets/${name}`
 
@@ -15,7 +16,7 @@ const products = [
 function StorePage() {
   const [grade, setGrade] = useState('Loại 1')
   const [size, setSize] = useState('Vừa (400g)')
-  const [cart, setCart] = useState(0)
+  const { cartCount: cart, addToCart } = useDemoSession()
   const [sort, setSort] = useState('Mới nhất')
   const active = useMemo(() => [grade, `Kích cỡ: ${size}`], [grade, size])
   const clear = () => { setGrade(''); setSize('') }
@@ -35,7 +36,7 @@ function StorePage() {
       </aside>
       <div className="store-list">
         <div className="store-toolbar"><div>ĐANG CHỌN: {active.map(x => <button key={x}>{x} ×</button>)}<button onClick={clear}>Xoá tất cả</button></div><label>SẮP XẾP: <select value={sort} onChange={e=>setSort(e.target.value)}><option>Mới nhất</option><option>Giá tăng dần</option><option>Giá giảm dần</option></select></label><span aria-live="polite">GIỎ HÀNG: {cart}</span></div>
-        <div className="product-grid">{products.map(([type, weight, name, price, old, batch]) => <article className="product-card" key={name}><div className="product-image"><span>{type}</span><b>{weight}</b><img src={asset('storeCrab.png')} alt={name} /></div><small>{batch || ' '}</small><h2>{name}</h2><div className="product-price"><strong>{price}</strong>{old && <del>{old}</del>}</div><button onClick={() => setCart(c=>c+1)}><img src={asset('storeCart.svg')} alt="" />THÊM VÀO GIỎ</button></article>)}</div>
+        <div className="product-grid">{products.map(([type, weight, name, price, old, batch]) => <article className="product-card" key={name}><a href="/san-pham"><div className="product-image"><span>{type}</span><b>{weight}</b><img src={asset('storeCrab.png')} alt={name} /></div></a><small>{batch || ' '}</small><h2>{name}</h2><div className="product-price"><strong>{price}</strong>{old && <del>{old}</del>}</div><button onClick={addToCart}><img src={asset('storeCart.svg')} alt="" />THÊM VÀO GIỎ</button></article>)}</div>
         <div className="store-pagination"><span>Hiển thị 1–6 trong tổng số 38 sản phẩm thu hoạch</span><div><button><img src={asset('storePrev.svg')} alt="Trang trước" /></button><button className="current">1</button><button>2</button><button>3</button><b>…</b><button>7</button><button><img src={asset('storeNext.svg')} alt="Trang sau" /></button></div></div>
       </div>
     </section>
