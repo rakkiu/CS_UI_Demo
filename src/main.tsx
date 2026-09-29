@@ -28,10 +28,20 @@ import AdminAlerts from './admin/AdminAlerts'
 import AdminDisputes from './admin/AdminDisputes'
 import AdminSettings from './admin/AdminSettings'
 import Landing from './landing/Landing'
+import DesignIndex from './redesign/DesignIndex'
+import { StoreV1, StoreV2, StoreV3 } from './redesign/Store'
+import { InvestorV1, InvestorV2, InvestorV3 } from './redesign/Investor'
 import { DemoSessionProvider } from './DemoSession'
 import './index.css'
 
 const routes: Record<string, React.ComponentType> = {
+  '/thiet-ke': DesignIndex,
+  '/thiet-ke/cua-hang/1': StoreV1,
+  '/thiet-ke/cua-hang/2': StoreV2,
+  '/thiet-ke/cua-hang/3': StoreV3,
+  '/thiet-ke/nha-dau-tu/1': InvestorV1,
+  '/thiet-ke/nha-dau-tu/2': InvestorV2,
+  '/thiet-ke/nha-dau-tu/3': InvestorV3,
   '/dang-ky': RegisterPage,
   '/dang-nhap': LoginPage,
   '/cua-hang': StorePage,
