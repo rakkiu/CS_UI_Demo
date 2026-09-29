@@ -4,12 +4,15 @@ import { SiteFooter, SiteHeader } from './SiteChrome'
 import { useDemoSession } from './DemoSession'
 
 const asset = (name: string) => `/assets/${name}`
+const customerDemoAccount = { email: 'customer@demo.crabshare.vn', password: 'CrabShareDemo2026' }
+type LoginDemoKind = InvestorKind | 'customer'
 
 function LoginPage() {
   const demoParam = new URLSearchParams(window.location.search).get('demo')
-  const demoKind = demoParam === 'financial' || demoParam === 'offtake' ? demoParam : null
-  const [email, setEmail] = useState(demoKind ? demoAccounts[demoKind].email : '')
-  const [password, setPassword] = useState(demoKind ? demoAccounts[demoKind].password : '')
+  const demoKind: LoginDemoKind | null = demoParam === 'financial' || demoParam === 'offtake' || demoParam === 'customer' ? demoParam : null
+  const demoAccount = demoKind === 'customer' ? customerDemoAccount : demoKind ? demoAccounts[demoKind] : null
+  const [email, setEmail] = useState(demoAccount?.email ?? '')
+  const [password, setPassword] = useState(demoAccount?.password ?? '')
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
   const { signIn: saveSession } = useDemoSession()
@@ -19,17 +22,18 @@ function LoginPage() {
     if (!demoKind) return
     const timer = window.setTimeout(() => {
       saveSession(demoKind)
-      window.location.replace('/investor')
+      window.location.replace(demoKind === 'customer' ? '/' : '/investor')
     }, 900)
     return () => window.clearTimeout(timer)
   }, [demoKind])
 
-  const enterDemo = (kind: InvestorKind) => {
-    setEmail(demoAccounts[kind].email)
-    setPassword(demoAccounts[kind].password)
+  const enterDemo = (kind: LoginDemoKind) => {
+    const account = kind === 'customer' ? customerDemoAccount : demoAccounts[kind]
+    setEmail(account.email)
+    setPassword(account.password)
     setEntering(true)
     saveSession(kind)
-    window.location.assign('/investor')
+    window.location.assign(kind === 'customer' ? '/' : '/investor')
   }
 
   const signIn = (event: FormEvent<HTMLFormElement>) => {
@@ -75,25 +79,29 @@ function LoginPage() {
           <div className='login-demo-banner'>
             <div className='login-demo-header'>
               <span className='login-demo-badge'>DEMO</span>
-              <p className='login-demo-desc'>Truy cập nhanh vào workspace Investor — không cần đăng ký</p>
+              <p className='login-demo-desc'>Truy cập nhanh bằng tài khoản mẫu — không cần đăng ký</p>
             </div>
             <div className='login-demo-actions'>
+              <button id='demo-customer-btn' type='button' className='login-demo-btn login-demo-btn--outline' disabled={entering} onClick={() => enterDemo('customer')}>
+                <span className='login-demo-btn-text'>
+                  <strong>Customer</strong>
+                  <small>Mua cua · Giỏ hàng · Theo dõi đơn hàng</small>
+                </span>
+              </button>
               <button id='demo-financial-btn' type='button' className='login-demo-btn login-demo-btn--outline' disabled={entering} onClick={() => enterDemo('financial')}>
-                <span className='login-demo-icon' aria-hidden='true'>📊</span>
                 <span className='login-demo-btn-text'>
                   <strong>Financial Investor</strong>
                   <small>Góp vốn · Danh mục · Quyết toán</small>
                 </span>
               </button>
               <button id='demo-offtake-btn' type='button' className='login-demo-btn login-demo-btn--filled' disabled={entering} onClick={() => enterDemo('offtake')}>
-                <span className='login-demo-icon' aria-hidden='true'>🦀</span>
                 <span className='login-demo-btn-text'>
                   <strong>Offtake Investor</strong>
                   <small>Bao tiêu · Giao nhận ưu tiên</small>
                 </span>
               </button>
             </div>
-            {entering && <p role='status' className='login-demo-status'>Đang mở workspace Investor…</p>}
+            {entering && <p role='status' className='login-demo-status'>Đang đăng nhập tài khoản demo…</p>}
           </div>
           <form className='login-form' onSubmit={signIn} noValidate>
             <label className='login-field'>
@@ -107,7 +115,7 @@ function LoginPage() {
               <button type='button' onClick={() => setShowPassword(v => !v)} aria-label={showPassword ? 'Hide password' : 'Show password'}><img src={asset('loginEye.svg')} alt='' /></button>
             </label>
             <button type='button' className='login-reset' onClick={() => setMessage('Tính năng đặt lại mật khẩu sẽ được kết nối với email service.')}>Reset Password</button>
-            <button type='submit' className='login-submit' disabled={entering}>{entering ? 'Đang mở workspace Investor…' : 'Sign In'}</button>
+            <button type='submit' className='login-submit' disabled={entering}>{entering ? 'Đang đăng nhập…' : 'Sign In'}</button>
             <div className='login-divider'><span>OR</span></div>
             <button type='button' className='login-passkey' onClick={() => setMessage('Đăng nhập Passkey cần được kết nối với WebAuthn.')}><img src={asset('loginFingerprint.svg')} alt='' />SIGN IN WITH PASSKEY</button>
             {message && <p className={message.startsWith('Đăng nhập') ? 'login-success' : 'login-error'} role='status'>{message}</p>}
