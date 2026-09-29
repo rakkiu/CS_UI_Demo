@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
 import OperatorDashboard from './OperatorDashboard'
@@ -28,6 +27,7 @@ import AdminSettlementDetail from './admin/AdminSettlementDetail'
 import AdminAlerts from './admin/AdminAlerts'
 import AdminDisputes from './admin/AdminDisputes'
 import AdminSettings from './admin/AdminSettings'
+import Landing from './landing/Landing'
 import { DemoSessionProvider } from './DemoSession'
 import './index.css'
 
@@ -69,7 +69,7 @@ const routes: Record<string, React.ComponentType> = {
 
 // Remove query parameters for matching (e.g. /operator/batch/detail?demo=1 -> /operator/batch/detail)
 const pathName = window.location.pathname;
-const Page = pathName === '/investor' || pathName.startsWith('/investor/') ? InvestorApp : routes[pathName] || App;
+const Page = pathName === '/investor' || pathName.startsWith('/investor/') ? InvestorApp : routes[pathName] || Landing;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
