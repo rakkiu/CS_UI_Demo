@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
 
-type DemoRole = 'customer' | 'financial' | 'offtake'
+type DemoRole = 'customer' | 'financial' | 'offtake' | 'operator'
 type DemoSession = { signedIn: boolean; role: DemoRole; cartCount: number; signIn: (role?: DemoRole) => void; signOut: () => void; addToCart: () => void; clearCart: () => void }
 const SessionContext = createContext<DemoSession | null>(null)
 
 export function DemoSessionProvider({ children }: { children: ReactNode }) {
   const [signedIn, setSignedIn] = useState(() => localStorage.getItem('crabshare-demo-user') === 'signed-in')
-  const [role, setRole] = useState<DemoRole>(() => { const value = localStorage.getItem('crabshare-demo-role'); return value === 'financial' || value === 'offtake' ? value : 'customer' })
+  const [role, setRole] = useState<DemoRole>(() => { const value = localStorage.getItem('crabshare-demo-role'); return value === 'financial' || value === 'offtake' || value === 'operator' ? value : 'customer' })
   const [cartCount, setCartCount] = useState(() => Number(localStorage.getItem('crabshare-demo-cart') || 0))
   const signIn = (nextRole: DemoRole = 'customer') => { localStorage.setItem('crabshare-demo-user', 'signed-in'); localStorage.setItem('crabshare-demo-role', nextRole); setRole(nextRole); setSignedIn(true) }
   const signOut = () => { localStorage.removeItem('crabshare-demo-user'); localStorage.removeItem('crabshare-demo-role'); setRole('customer'); setSignedIn(false) }

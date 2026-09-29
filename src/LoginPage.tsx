@@ -5,12 +5,13 @@ import { useDemoSession } from './DemoSession'
 
 const asset = (name: string) => `/assets/${name}`
 const customerDemoAccount = { email: 'customer@demo.crabshare.vn', password: 'CrabShareDemo2026' }
-type LoginDemoKind = InvestorKind | 'customer'
+const operatorDemoAccount = { email: 'operator@crabshare.com', password: 'CrabShareDemo2026' }
+type LoginDemoKind = InvestorKind | 'customer' | 'operator'
 
 function LoginPage() {
   const demoParam = new URLSearchParams(window.location.search).get('demo')
-  const demoKind: LoginDemoKind | null = demoParam === 'financial' || demoParam === 'offtake' || demoParam === 'customer' ? demoParam : null
-  const demoAccount = demoKind === 'customer' ? customerDemoAccount : demoKind ? demoAccounts[demoKind] : null
+  const demoKind: LoginDemoKind | null = demoParam === 'financial' || demoParam === 'offtake' || demoParam === 'customer' || demoParam === 'operator' ? demoParam : null
+  const demoAccount = demoKind === 'customer' ? customerDemoAccount : demoKind === 'operator' ? operatorDemoAccount : demoKind ? demoAccounts[demoKind] : null
   const [email, setEmail] = useState(demoAccount?.email ?? '')
   const [password, setPassword] = useState(demoAccount?.password ?? '')
   const [showPassword, setShowPassword] = useState(false)
@@ -22,18 +23,18 @@ function LoginPage() {
     if (!demoKind) return
     const timer = window.setTimeout(() => {
       saveSession(demoKind)
-      window.location.replace(demoKind === 'customer' ? '/' : '/investor')
+      window.location.replace(demoKind === 'customer' ? '/' : demoKind === 'operator' ? '/operator' : '/investor')
     }, 900)
     return () => window.clearTimeout(timer)
   }, [demoKind])
 
   const enterDemo = (kind: LoginDemoKind) => {
-    const account = kind === 'customer' ? customerDemoAccount : demoAccounts[kind]
+    const account = kind === 'customer' ? customerDemoAccount : kind === 'operator' ? operatorDemoAccount : demoAccounts[kind]
     setEmail(account.email)
     setPassword(account.password)
     setEntering(true)
     saveSession(kind)
-    window.location.assign(kind === 'customer' ? '/' : '/investor')
+    window.location.assign(kind === 'customer' ? '/' : kind === 'operator' ? '/operator' : '/investor')
   }
 
   const signIn = (event: FormEvent<HTMLFormElement>) => {
@@ -50,7 +51,7 @@ function LoginPage() {
         : null
     if (investorKind) { saveSession(investorKind); window.location.assign('/investor'); return }
     if (email.toLowerCase() === 'operator@crabshare.com') {
-      saveSession()
+      saveSession('operator')
       window.location.assign('/operator')
       return
     }
@@ -98,6 +99,12 @@ function LoginPage() {
                 <span className='login-demo-btn-text'>
                   <strong>Offtake Investor</strong>
                   <small>Bao tiêu · Giao nhận ưu tiên</small>
+                </span>
+              </button>
+              <button id='demo-operator-btn' type='button' className='login-demo-btn login-demo-btn--outline' disabled={entering} onClick={() => enterDemo('operator')}>
+                <span className='login-demo-btn-text'>
+                  <strong>Farm Operator</strong>
+                  <small>Vận hành ao · Nhật ký nuôi · Thu hoạch & đối soát</small>
                 </span>
               </button>
             </div>

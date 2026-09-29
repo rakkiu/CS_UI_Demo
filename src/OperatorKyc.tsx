@@ -1,75 +1,57 @@
-
-import { UploadCloud, CheckCircle, ShieldCheck, FileText } from 'lucide-react';
-import OperatorLayout from './OperatorLayout';
+import { UploadCloud, CheckCircle, ShieldCheck, FileText } from 'lucide-react'
+import OperatorLayout from './OperatorLayout'
+import { OpBadge, OpBtn, OpHeading, OpPanel } from './operatorUi'
 
 export default function OperatorKyc() {
   return (
     <OperatorLayout activeTab="kyc">
-      <header className="mb-8">
-        <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Hồ sơ pháp lý & eKYC</h1>
-        <p className="text-sm text-gray-500 mt-1">Xác thực danh tính và cung cấp giấy phép trang trại</p>
-      </header>
+      <OpHeading
+        eyebrow="Định danh · eKYC"
+        title="Hồ sơ pháp lý & eKYC"
+        description="Xác thực CCCD, liveness và giấy phép kinh doanh của trại."
+      />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Cột 1: CCCD / Chụp mặt */}
-        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-full bg-[#f0fdf4] text-[#15803d] flex items-center justify-center border border-[#bbf7d0]">
-              <CheckCircle className="w-5 h-5" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <OpPanel
+          title="1. Xác thực danh tính"
+          action={<OpBadge tone="ok"><CheckCircle className="w-3 h-3" /> Đã duyệt</OpBadge>}
+        >
+          <div className="flex gap-4 mb-4">
+            <div className="w-1/2 aspect-[1.6] rounded-xl border border-[#e8dccb] overflow-hidden relative bg-[#ece4d8]">
+              <img src="/assets/imgQuestionCardSection.png" className="opacity-40 object-cover w-full h-full absolute" alt="" />
+              <span className="absolute inset-0 grid place-items-center text-xs font-bold">Mặt trước CCCD</span>
             </div>
-            <h2 className="text-base font-extrabold text-[#171717]">1. Xác thực Danh tính (Đã duyệt)</h2>
+            <div className="w-1/2 aspect-[1.6] rounded-xl border border-[#e8dccb] grid place-items-center bg-[#ece4d8] text-xs font-bold text-[#9a8f84]">
+              Mặt sau CCCD
+            </div>
           </div>
-          
+          <div className="p-4 rounded-xl bg-[#f4efe8] border border-[#f0e8dc] text-sm space-y-1">
+            <p><strong>Họ và tên:</strong> Nguyễn Văn A</p>
+            <p><strong>Số CCCD:</strong> 079200123456</p>
+            <p><strong>Liveness:</strong> <span className="text-[#15803d] font-bold">Khớp 99.8%</span></p>
+          </div>
+        </OpPanel>
+
+        <OpPanel
+          accent
+          title="2. Giấy phép trại"
+          action={<OpBadge tone="warn"><ShieldCheck className="w-3 h-3" /> Cần bổ sung</OpBadge>}
+        >
           <div className="space-y-4">
-            <div className="flex gap-4">
-              <div className="w-1/2 aspect-[1.6] bg-gray-100 rounded-md border border-[#e8dccb] flex items-center justify-center relative overflow-hidden">
-                <img src="/assets/imgQuestionCardSection.png" className="opacity-40 object-cover w-full h-full absolute" alt="CCCD" />
-                <span className="text-xs font-bold text-gray-600 relative z-10 bg-[#faf6f0]/80 px-2 py-1 rounded">Mặt trước CCCD</span>
-              </div>
-              <div className="w-1/2 aspect-[1.6] bg-gray-100 rounded-md border border-[#e8dccb] flex items-center justify-center">
-                <span className="text-xs font-bold text-gray-400">Mặt sau CCCD</span>
-              </div>
+            <div className="op-field">
+              <label>Giấy phép đăng ký kinh doanh</label>
+              <div className="op-drop is-accent"><UploadCloud className="w-6 h-6" /> Tải lên giấy phép KD (PDF/JPG)</div>
             </div>
-            <div className="p-4 bg-[#f4efe8] rounded text-sm text-gray-600 border border-[#f0e8dc]">
-              <p><strong>Họ và tên:</strong> NGUYỄN VĂN A</p>
-              <p><strong>Số CCCD:</strong> 079200123456</p>
-              <p><strong>Liveness (Face):</strong> <span className="text-[#15803d] font-bold">Khớp 99.8%</span></p>
+            <div className="op-field">
+              <label>Chứng nhận VietGAP / đủ điều kiện</label>
+              <div className="op-drop"><UploadCloud className="w-6 h-6" /> Tải lên chứng nhận</div>
             </div>
+            <OpBtn variant="ink" full onClick={() => window.alert('Đã gửi hồ sơ cho Admin xét duyệt!')}>
+              <FileText className="w-4 h-4" /> Gửi xét duyệt
+            </OpBtn>
           </div>
-        </div>
-
-        {/* Cột 2: Giấy phép kinh doanh / Farm */}
-        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#f4cf9c] shadow-sm ring-1 ring-[#fff8ef]">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-full bg-[#fff8ef] text-[#b45309] flex items-center justify-center border border-[#f4cf9c]">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h2 className="text-base font-extrabold text-[#7d4b1a]">2. Giấy phép Trại & Hợp đồng (Cần bổ sung)</h2>
-          </div>
-
-          <div className="space-y-5">
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Giấy phép đăng ký kinh doanh (PDF/JPG)</label>
-              <div className="border-2 border-dashed border-[#f4cf9c] bg-[#fff8ef] rounded-lg p-6 flex flex-col items-center justify-center text-[#7d4b1a] hover:bg-[#ffedd5] cursor-pointer transition-colors">
-                <UploadCloud className="w-6 h-6 mb-2" />
-                <span className="text-xs font-bold">Tải lên Giấy phép KD</span>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Chứng nhận VietGAP / Cở sở đủ điều kiện</label>
-              <div className="border-2 border-dashed border-gray-300 bg-[#f4efe8] rounded-lg p-6 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors">
-                <UploadCloud className="w-6 h-6 mb-2" />
-                <span className="text-xs font-bold">Tải lên Chứng nhận</span>
-              </div>
-            </div>
-
-            <button onClick={() => { window.alert('Đã gửi hồ sơ cho Admin xét duyệt!'); }} className="w-full flex items-center justify-center gap-2 bg-[#171717] hover:bg-[#333] text-white px-6 py-3 rounded font-bold text-sm transition-colors uppercase tracking-widest shadow-md">
-              <FileText className="w-4 h-4" /> Gửi Xét Duyệt
-            </button>
-          </div>
-        </div>
+        </OpPanel>
       </div>
     </OperatorLayout>
-  );
+  )
 }
