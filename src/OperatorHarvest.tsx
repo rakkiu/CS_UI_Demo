@@ -1,205 +1,141 @@
-
-import { QrCode, PlusCircle, Box, PackageCheck, UploadCloud, ArrowLeft, ArrowRight, Package } from 'lucide-react';
-import OperatorLayout from './OperatorLayout';
+import { QrCode, PlusCircle, Box, PackageCheck, UploadCloud, ArrowLeft, ArrowRight, Package } from 'lucide-react'
+import OperatorLayout from './OperatorLayout'
+import { OpBack, OpBadge, OpBtn, OpHeading, OpNote, OpPanel } from './operatorUi'
 
 export default function OperatorHarvest() {
-  const params = new URLSearchParams(window.location.search);
-  const batchId = params.get('batchId');
+  const params = new URLSearchParams(window.location.search)
+  const batchId = params.get('batchId')
 
-  // MÀN HÌNH 1: DANH SÁCH CÁC LÔ SẴN SÀNG THU HOẠCH
   if (!batchId) {
     const readyBatches = [
-      { id: 'BATCH-2026-10B', type: 'Cua Gạch', total: 800, sold: 150, frozen: 50, remaining: 600, status: 'Đang thu hoạch mạnh' },
-      { id: 'BATCH-2026-11A', type: 'Cua Lột', total: 1500, sold: 10, frozen: 0, remaining: 1490, status: 'Bắt đầu lột tẻ tẻ' },
-    ];
+      { id: 'BATCH-2026-10B', type: 'Cua gạch', total: 800, sold: 150, frozen: 50, remaining: 600, status: 'Đang thu hoạch' },
+      { id: 'BATCH-2026-11A', type: 'Cua lột', total: 1500, sold: 10, frozen: 0, remaining: 1490, status: 'Bắt đầu lột tẻ' },
+    ]
 
     return (
       <OperatorLayout activeTab="harvest">
-        <header className="mb-6">
-          <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Quản lý Xuất Bán & Thu Hoạch</h1>
-          <p className="text-sm text-gray-500 mt-1">Chọn lô cua đã đạt tiêu chuẩn để tiến hành gắn QR và Đóng gói</p>
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {readyBatches.map(b => (
-            <div key={b.id} onClick={() => window.location.href=`/operator/harvest?batchId=${b.id}`} className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] hover:border-[#7d4b1a] shadow-sm cursor-pointer transition-all hover:shadow-md">
-              <div className="flex justify-between items-start mb-4 border-b border-[#f0e8dc] pb-4">
+        <OpHeading
+          eyebrow="UC-07 · Thu hoạch"
+          title="Xuất bán & thu hoạch"
+          description="Chọn lô đạt chuẩn để gắn QR, đóng gói và đẩy giá lên storefront."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {readyBatches.map((b) => (
+            <article key={b.id} onClick={() => { window.location.href = `/operator/harvest?batchId=${b.id}` }} className="op-panel cursor-pointer hover:border-[#7d4b1a] transition-all">
+              <div className="flex justify-between items-start mb-4 pb-4 border-b border-[#f0e8dc]">
                 <div>
                   <h2 className="text-lg font-extrabold text-[#7d4b1a]">{b.id}</h2>
-                  <p className="text-sm font-bold text-gray-500">{b.type}</p>
+                  <p className="text-sm text-[#6f675e]">{b.type}</p>
                 </div>
-                <span className="bg-[#f0fdf4] text-[#15803d] border border-[#bbf7d0] px-3 py-1 rounded-full text-xs font-bold">
-                  {b.status}
-                </span>
+                <OpBadge tone="ok">{b.status}</OpBadge>
               </div>
-              
-              <div className="grid grid-cols-2 gap-y-4 gap-x-6 text-sm">
-                <div>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Tổng sản lượng</p>
-                  <p className="font-extrabold text-[#171717] text-lg">{b.total} <span className="text-xs font-medium text-gray-500">con</span></p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-[#b45309] uppercase tracking-wider mb-1">Tồn kho thực tế (Sẵn sàng)</p>
-                  <p className="font-extrabold text-[#b45309] text-lg">{b.remaining} <span className="text-xs font-medium opacity-80">con</span></p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Đã Bán & Đóng gói</p>
-                  <p className="font-extrabold text-[#171717]">{b.sold} <span className="text-xs font-medium text-gray-500">con</span></p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Trữ đông / Pre-order</p>
-                  <p className="font-extrabold text-[#0369a1]">{b.frozen} <span className="text-xs font-medium opacity-80">con</span></p>
-                </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div><p className="text-[10px] font-bold uppercase text-[#9a8f84]">Tổng sản lượng</p><p className="font-extrabold text-lg">{b.total} <em className="text-xs font-medium not-italic text-[#6f675e]">con</em></p></div>
+                <div><p className="text-[10px] font-bold uppercase text-[#b45309]">Tồn kho sẵn sàng</p><p className="font-extrabold text-lg text-[#b45309]">{b.remaining}</p></div>
+                <div><p className="text-[10px] font-bold uppercase text-[#9a8f84]">Đã bán & đóng gói</p><p className="font-extrabold">{b.sold}</p></div>
+                <div><p className="text-[10px] font-bold uppercase text-[#9a8f84]">Trữ đông</p><p className="font-extrabold text-[#0369a1]">{b.frozen}</p></div>
               </div>
-
-              <button className="w-full mt-6 bg-[#fff8ef] text-[#7d4b1a] border border-[#f4cf9c] py-2.5 rounded font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#ffedd5] transition-colors">
-                <Package className="w-4 h-4" /> Vào Khu Vực Thu Hoạch <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+              <OpBtn variant="ghost" full className="mt-5">
+                <Package className="w-4 h-4" /> Vào khu vực thu hoạch <ArrowRight className="w-4 h-4" />
+              </OpBtn>
+            </article>
           ))}
         </div>
       </OperatorLayout>
-    );
+    )
   }
 
-  // MÀN HÌNH 2: CHI TIẾT THU HOẠCH 1 LÔ (UI CŨ ĐÃ LÀM)
   const harvestedItems = [
-    { id: 'CRAB-7392-L1', weight: '210g', type: 'Cua lột chuẩn', status: 'Đã gắn mã QR' },
-    { id: 'CRAB-7393-L1', weight: '225g', type: 'Cua lột loại 1', status: 'Đã gắn mã QR' },
-  ];
+    { id: 'CRAB-7392-L1', weight: '210g', type: 'Cua lột chuẩn' },
+    { id: 'CRAB-7393-L1', weight: '225g', type: 'Cua lột loại 1' },
+  ]
 
   return (
     <OperatorLayout activeTab="harvest">
-      <header className="mb-6">
-        <button onClick={() => window.location.href='/operator/harvest'} className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-[#7d4b1a] transition-colors mb-2">
-          <ArrowLeft className="w-4 h-4" /> Quay lại danh sách Lô
-        </button>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
-          <div>
-            <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Khu vực Thu Hoạch & Đóng Gói</h1>
-            <p className="text-sm text-gray-500 mt-1">Lô {batchId} • Khả dụng: 600 con</p>
-          </div>
-        </div>
-      </header>
+      <OpHeading
+        eyebrow={`Lô ${batchId}`}
+        title="Thu hoạch & đóng gói"
+        description="Khả dụng: 600 con · tự định giá theo BR-56."
+        crumb={
+          <OpBack href="/operator/harvest">
+            <ArrowLeft className="w-4 h-4" /> Quay lại danh sách lô
+          </OpBack>
+        }
+      />
 
-      {/* TÍNH NĂNG MỚI: ĐỊNH GIÁ BÁN THEO BR-56 */}
-      <div className="bg-[#fff8ef] p-6 rounded-lg border border-[#f4cf9c] shadow-sm mb-6">
-        <div className="flex justify-between items-center mb-4 border-b border-[#f4cf9c] pb-3">
-          <h2 className="text-base font-extrabold text-[#7d4b1a]">Thiết lập Giá Bán & Yêu cầu lên Cửa hàng (Storefront)</h2>
-          <span className="text-xs font-bold bg-[#ffedd5] text-[#7d4b1a] px-2 py-1 rounded">BR-56: Operator tự định giá</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <label className="block text-sm font-bold text-[#171717] mb-2">Cua Lột Loại 1 (200g+)</label>
+      <OpPanel accent className="mb-5" title="Thiết lập giá bán & lên cửa hàng" action={<OpBadge tone="gold">BR-56 · Operator tự định giá</OpBadge>}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="op-field">
+            <label>Cua lột loại 1 (200g+)</label>
             <div className="flex items-center gap-2">
-              <input type="number" defaultValue={850000} className="w-full p-2 border border-[#f4cf9c] bg-[#faf6f0] rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
-              <span className="text-sm font-bold text-gray-500">VND/kg</span>
+              <input type="number" defaultValue={850000} className="op-input font-mono font-bold text-[#7d4b1a]" />
+              <span className="text-sm text-[#6f675e]">₫/kg</span>
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-bold text-[#171717] mb-2">Cua Lột Loại 2 (150g+)</label>
+          <div className="op-field">
+            <label>Cua lột loại 2 (150g+)</label>
             <div className="flex items-center gap-2">
-              <input type="number" defaultValue={650000} className="w-full p-2 border border-[#f4cf9c] bg-[#faf6f0] rounded font-mono font-bold text-[#7d4b1a] focus:outline-none focus:border-[#7d4b1a]" />
-              <span className="text-sm font-bold text-gray-500">VND/kg</span>
+              <input type="number" defaultValue={650000} className="op-input font-mono font-bold text-[#7d4b1a]" />
+              <span className="text-sm text-[#6f675e]">₫/kg</span>
             </div>
           </div>
           <div className="flex items-end">
-            <button onClick={() => alert('Đã lưu giá và gửi yêu cầu đến Admin. Chờ Admin duyệt lên Storefront!')} className="w-full bg-[#7d4b1a] hover:bg-[#6b3f15] text-white py-2.5 rounded font-bold text-sm shadow-md transition-colors flex justify-center items-center gap-2">
-              <PackageCheck className="w-4 h-4" /> Yêu cầu Admin Duyệt Lên Kệ
-            </button>
+            <OpBtn full onClick={() => alert('Đã lưu giá và gửi yêu cầu đến Admin. Chờ duyệt lên Storefront!')}>
+              <PackageCheck className="w-4 h-4" /> Yêu cầu duyệt lên kệ
+            </OpBtn>
           </div>
         </div>
-        <p className="text-xs text-[#7d4b1a] mt-3 italic">* Hệ thống cảnh báo: Giá Cua Loại 1 của bạn đang cao hơn 10% so với mặt bằng chung (Đây chỉ là cảnh báo, Nền tảng không áp giá theo quy định BR-56).</p>
-      </div>
+        <OpNote className="mt-4">Giá loại 1 đang cao hơn ~10% mặt bằng chung — chỉ là cảnh báo, nền tảng không áp giá (BR-56).</OpNote>
+      </OpPanel>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Cột 1: Form Sinh QR */}
-        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex flex-col">
-          <h2 className="text-base font-extrabold text-[#7d4b1a] mb-5 border-b border-[#f0e8dc] pb-3">1. Khai báo & Gắn tem QR</h2>
-          <p className="text-xs text-gray-500 mb-4">Sinh tem truy xuất nguồn gốc từng con cua lúc bắt ra khỏi hộp.</p>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+        <OpPanel title="1. Khai báo & gắn tem QR" subtitle="Sinh tem truy xuất từng con lúc bắt khỏi hộp.">
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Trọng lượng (gram)</label>
-              <input type="number" placeholder="VD: 250" className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium" />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Phân loại chất lượng</label>
-              <select className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium bg-[#faf6f0]">
-                <option>Loại 1 (Tuyệt hảo - 200g+)</option>
-                <option>Loại 2 (Tiêu chuẩn - 150g+)</option>
+            <div className="op-field"><label>Trọng lượng (gram)</label><input className="op-input" type="number" placeholder="VD: 250" /></div>
+            <div className="op-field">
+              <label>Phân loại</label>
+              <select className="op-select">
+                <option>Loại 1 (200g+)</option>
+                <option>Loại 2 (150g+)</option>
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Vị trí Lồng (Slot ID)</label>
-              <input type="text" placeholder="S-25" className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium" />
-            </div>
-            <button className="w-full flex items-center justify-center gap-2 bg-[#fff8ef] text-[#7d4b1a] border border-[#f4cf9c] px-4 py-2.5 rounded font-bold text-sm hover:bg-[#ffedd5] transition-colors mt-2 shadow-sm">
-              <PlusCircle className="w-4 h-4" /> In Tem QR Mới
-            </button>
+            <div className="op-field"><label>Vị trí lồng (Slot ID)</label><input className="op-input" placeholder="S-25" /></div>
+            <OpBtn variant="ghost" full><PlusCircle className="w-4 h-4" /> In tem QR mới</OpBtn>
           </div>
-        </div>
+        </OpPanel>
 
-        {/* Cột 2: Đóng hàng giao khách */}
-        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#7d4b1a] shadow-sm flex flex-col ring-1 ring-[#fff8ef]">
-          <h2 className="text-base font-extrabold text-[#171717] mb-5 border-b border-[#f0e8dc] pb-3">2. Đóng Hàng Giao Khách</h2>
-          <p className="text-xs text-gray-500 mb-4">Xử lý đơn bán lẻ từ nền tảng. Khách mua cua, Trại đóng gói gửi Ship.</p>
-          <div className="space-y-4 flex-1">
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Mã Đơn / Tên Khách</label>
-              <input type="text" defaultValue="ORD-9982 (Anh Tuấn)" readOnly className="w-full p-2 border border-[#e8dccb] bg-[#f4efe8] rounded outline-none text-sm font-bold text-[#7d4b1a]" />
-            </div>
+        <OpPanel accent title="2. Đóng hàng giao khách" subtitle="Đơn bán lẻ từ nền tảng.">
+          <div className="space-y-4">
+            <div className="op-field"><label>Mã đơn / khách</label><input className="op-input" defaultValue="ORD-9982 (Anh Tuấn)" readOnly /></div>
             <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-sm font-bold text-[#171717] mb-2">Số lượng (con)</label>
-                <input type="number" placeholder="VD: 2" className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-[#171717] mb-2">Tổng ký (gram)</label>
-                <input type="number" placeholder="VD: 550" className="w-full p-2 border border-gray-300 rounded focus:border-[#7d4b1a] outline-none text-sm font-medium" />
-              </div>
+              <div className="op-field"><label>Số con</label><input className="op-input" type="number" placeholder="2" /></div>
+              <div className="op-field"><label>Tổng gram</label><input className="op-input" type="number" placeholder="550" /></div>
             </div>
-            <div>
-              <label className="block text-sm font-bold text-[#171717] mb-2">Hình ảnh đóng thùng (Tình trạng cua)</label>
-              <div className="border border-dashed border-gray-300 bg-[#f4efe8] rounded-lg p-4 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer transition-colors">
-                <UploadCloud className="w-5 h-5 mb-1" />
-                <span className="text-[10px] font-bold">Chụp & Tải ảnh lên</span>
-              </div>
+            <div className="op-field">
+              <label>Ảnh đóng thùng</label>
+              <div className="op-drop"><UploadCloud className="w-5 h-5" /> Chụp & tải ảnh</div>
             </div>
+            <OpBtn variant="ink" full onClick={() => alert('Đã báo đóng hàng xong! Khách sẽ nhận thông báo.')}>
+              <PackageCheck className="w-4 h-4" /> Báo hoàn tất đóng hàng
+            </OpBtn>
           </div>
-          <button onClick={() => alert('Đã báo đóng hàng xong! Khách hàng sẽ nhận được thông báo trạng thái đơn hàng.')} className="w-full flex items-center justify-center gap-2 bg-[#171717] hover:bg-[#333] text-white px-4 py-3 rounded font-bold text-sm transition-colors mt-6 shadow-md">
-            <PackageCheck className="w-4 h-4" /> Báo Hoàn Tất Đóng Hàng
-          </button>
-        </div>
+        </OpPanel>
 
-        {/* Cột 3: Danh sách QR */}
-        <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm flex flex-col">
-          <div className="flex justify-between items-center mb-5 border-b border-[#f0e8dc] pb-3">
-            <h2 className="text-base font-extrabold text-[#171717]">Danh sách mã QR đã sinh</h2>
-            <span className="text-sm font-bold text-[#15803d]">{harvestedItems.length} mã</span>
-          </div>
-          <div className="space-y-3 flex-1">
-            {harvestedItems.map((item, idx) => (
-              <div key={idx} className="flex flex-col p-3 border border-[#f0e8dc] rounded bg-[#f4efe8] hover:border-gray-300 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-1.5 bg-[#faf6f0] rounded border border-[#e8dccb] text-[#171717] shadow-sm">
-                    <QrCode className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="font-extrabold text-[#7d4b1a] tracking-wider text-xs">{item.id}</p>
-                    <p className="text-[10px] font-medium text-gray-500">{item.type} • <strong className="text-black">{item.weight}</strong></p>
-                  </div>
+        <OpPanel title="Mã QR đã sinh" action={<OpBadge tone="ok">{harvestedItems.length} mã</OpBadge>}>
+          <div className="space-y-3">
+            {harvestedItems.map((item) => (
+              <div key={item.id} className="flex items-center gap-3 p-3 rounded-xl border border-[#f0e8dc] bg-[#f4efe8]">
+                <div className="p-1.5 bg-white rounded-lg border border-[#e8dccb]"><QrCode className="w-5 h-5" /></div>
+                <div>
+                  <p className="font-extrabold text-[#7d4b1a] text-xs tracking-wider">{item.id}</p>
+                  <p className="text-[11px] text-[#6f675e]">{item.type} · {item.weight}</p>
                 </div>
               </div>
             ))}
-            <div className="mt-4 flex justify-center border-2 border-dashed border-[#e8dccb] p-4 rounded-lg bg-[#f4efe8]">
-              <div className="text-center">
-                <Box className="w-6 h-6 text-gray-400 mx-auto mb-1" />
-                <p className="text-[10px] font-bold text-gray-400">Scan QR để đối chiếu</p>
-              </div>
-            </div>
+            <div className="op-drop"><Box className="w-6 h-6" /> Scan QR để đối chiếu</div>
           </div>
-        </div>
+        </OpPanel>
       </div>
     </OperatorLayout>
-  );
+  )
 }

@@ -1,173 +1,152 @@
+import { useState } from 'react'
+import { ChevronRight, ChevronLeft, X, Activity, Droplets, Thermometer } from 'lucide-react'
+import OperatorLayout from './OperatorLayout'
+import { OpBadge, OpBtn, OpHeading, OpPanel } from './operatorUi'
 
-import { useState } from 'react';
-import { ChevronRight, ChevronLeft, X, Activity, Droplets, Thermometer } from 'lucide-react';
-import OperatorLayout from './OperatorLayout';
+type BoxStatus = 'occupied' | 'alert' | 'empty'
+type FarmBox = { id: string; status: BoxStatus; weight: string }
 
 const mockBatches = [
-  { id: 'BATCH-2026-11A', name: 'Lô Cua Lột 11A', totalBoxes: 125, ph: '7.5', temp: '28.5°C' },
-  { id: 'BATCH-2026-10B', name: 'Lô Cua Gạch 10B', totalBoxes: 30, ph: '7.8', temp: '29.0°C' }
-];
+  { id: 'BATCH-2026-11A', name: 'Lô cua lột 11A', totalBoxes: 125, ph: '7.5', temp: '28.5°C' },
+  { id: 'BATCH-2026-10B', name: 'Lô cua gạch 10B', totalBoxes: 30, ph: '7.8', temp: '29.0°C' },
+]
 
 export default function OperatorFarmMap() {
-  const [selectedBatch, setSelectedBatch] = useState(mockBatches[0].id);
-  const [page, setPage] = useState(1);
-  const [selectedBox, setSelectedBox] = useState<any>(null);
-  const BOXES_PER_PAGE = 50;
+  const [selectedBatch, setSelectedBatch] = useState(mockBatches[0].id)
+  const [page, setPage] = useState(1)
+  const [selectedBox, setSelectedBox] = useState<FarmBox | null>(null)
+  const BOXES_PER_PAGE = 50
 
-  const currentBatch = mockBatches.find(b => b.id === selectedBatch)!;
-  const totalPages = Math.ceil(currentBatch.totalBoxes / BOXES_PER_PAGE);
+  const currentBatch = mockBatches.find((b) => b.id === selectedBatch)!
+  const totalPages = Math.ceil(currentBatch.totalBoxes / BOXES_PER_PAGE)
 
-  const generateBoxes = (batchId: string, count: number) => {
-    return Array.from({length: count}, (_, i) => {
-      let status = 'occupied';
-      if (batchId === 'BATCH-2026-11A' && (i % 12 === 0 || i === 44)) status = 'alert';
-      if (batchId === 'BATCH-2026-11A' && i % 25 === 0) status = 'empty';
-      if (batchId === 'BATCH-2026-10B' && i % 8 === 0) status = 'alert';
-      return {
-        id: `S-${i+1}`,
-        status,
-        weight: status === 'empty' ? '-' : `${200 + (i % 5)*5}g`
-      };
-    });
-  };
+  const allBoxes: FarmBox[] = Array.from({ length: currentBatch.totalBoxes }, (_, i) => {
+    let status: BoxStatus = 'occupied'
+    if (selectedBatch === 'BATCH-2026-11A' && (i % 12 === 0 || i === 44)) status = 'alert'
+    if (selectedBatch === 'BATCH-2026-11A' && i % 25 === 0) status = 'empty'
+    if (selectedBatch === 'BATCH-2026-10B' && i % 8 === 0) status = 'alert'
+    return { id: `S-${i + 1}`, status, weight: status === 'empty' ? '-' : `${200 + (i % 5) * 5}g` }
+  })
 
-  const allBoxes = generateBoxes(selectedBatch, currentBatch.totalBoxes);
-  const displayedBoxes = allBoxes.slice((page - 1) * BOXES_PER_PAGE, page * BOXES_PER_PAGE);
-
+  const displayedBoxes = allBoxes.slice((page - 1) * BOXES_PER_PAGE, page * BOXES_PER_PAGE)
   const stats = {
-    total: currentBatch.totalBoxes,
-    occupied: allBoxes.filter(b => b.status === 'occupied').length,
-    alert: allBoxes.filter(b => b.status === 'alert').length,
-    empty: allBoxes.filter(b => b.status === 'empty').length,
-  };
+    occupied: allBoxes.filter((b) => b.status === 'occupied').length,
+    alert: allBoxes.filter((b) => b.status === 'alert').length,
+    empty: allBoxes.filter((b) => b.status === 'empty').length,
+  }
 
   return (
     <OperatorLayout activeTab="map">
-      <header className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 gap-4">
-        <div>
-          <h1 className="text-2xl font-extrabold text-[#171717] tracking-tight">Sơ đồ Trại (RAS)</h1>
-          <div className="flex items-center gap-3 mt-3">
-            <span className="text-sm font-semibold text-gray-500">Đang chọn:</span>
-            <select 
-              className="border border-[#7d4b1a] bg-[#fff8ef] rounded p-1.5 text-sm font-extrabold text-[#7d4b1a] outline-none focus:ring-2 focus:ring-[#f4cf9c] shadow-sm cursor-pointer"
-              value={selectedBatch}
-              onChange={(e) => { setSelectedBatch(e.target.value); setPage(1); }}
-            >
-              {mockBatches.map(b => (
-                <option key={b.id} value={b.id}>{b.id} - {b.name} ({b.totalBoxes} ô)</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="flex gap-4 bg-[#faf6f0] px-4 py-2.5 rounded border border-[#e8dccb] shadow-sm">
-          <span className="flex items-center gap-2 text-xs font-bold text-gray-600"><div className="w-3 h-3 rounded border border-gray-300 bg-[#f4cf9c]"></div> Đang nuôi</span>
-          <span className="flex items-center gap-2 text-xs font-bold text-gray-600"><div className="w-3 h-3 rounded border border-[#b42318] bg-[#fca5a5]"></div> Cảnh báo</span>
-          <span className="flex items-center gap-2 text-xs font-bold text-gray-600"><div className="w-3 h-3 rounded border border-gray-300" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #f9fafb, #f9fafb 2px, #e5e7eb 2px, #e5e7eb 4px)' }}></div> Trống</span>
-        </div>
-      </header>
-      
-      {/* Summary Box */}
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
-        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm col-span-2 flex items-center justify-between">
-          <div><p className="text-xs font-bold text-gray-500 uppercase">Trạng thái chung</p><h3 className="font-extrabold text-lg mt-1 text-[#171717]">Tốt / Ổn định</h3></div>
+      <OpHeading
+        eyebrow="RAS Map"
+        title="Sơ đồ trại"
+        description="Ô cam đang nuôi · ô đỏ có cảnh báo IoT."
+        action={
+          <select
+            className="op-select"
+            style={{ width: 'auto', fontWeight: 800, color: '#7d4b1a' }}
+            value={selectedBatch}
+            onChange={(e) => { setSelectedBatch(e.target.value); setPage(1) }}
+          >
+            {mockBatches.map((b) => (
+              <option key={b.id} value={b.id}>{b.id} · {b.name} ({b.totalBoxes} ô)</option>
+            ))}
+          </select>
+        }
+      />
+
+      <div className="flex flex-wrap gap-3 mb-5 text-xs font-bold text-[#6f675e]">
+        <span className="flex items-center gap-2 op-panel py-2 px-3"><i className="w-3 h-3 rounded bg-[#f4cf9c] border border-[#7d4b1a]" /> Đang nuôi</span>
+        <span className="flex items-center gap-2 op-panel py-2 px-3"><i className="w-3 h-3 rounded bg-[#fca5a5] border border-[#b42318]" /> Cảnh báo</span>
+        <span className="flex items-center gap-2 op-panel py-2 px-3"><i className="w-3 h-3 rounded border border-gray-300 bg-[repeating-linear-gradient(45deg,#f9fafb,#f9fafb_2px,#e5e7eb_2px,#e5e7eb_4px)]" /> Trống</span>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-5">
+        <div className="op-stat col-span-2">
+          <div><span>Trạng thái chung</span><strong className="text-lg">Tốt / ổn định</strong></div>
           <Activity className="text-green-600 w-8 h-8 opacity-50" />
         </div>
-        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm text-center">
-          <p className="text-[10px] font-bold text-gray-500 uppercase">Đang nuôi</p><h3 className="font-extrabold text-xl text-[#7d4b1a]">{stats.occupied}</h3>
-        </div>
-        <div className="bg-[#fef2f2] p-4 rounded-lg border border-[#fca5a5] shadow-sm text-center">
-          <p className="text-[10px] font-bold text-[#b42318] uppercase">Cảnh báo</p><h3 className="font-extrabold text-xl text-[#b42318]">{stats.alert}</h3>
-        </div>
-        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm text-center" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #f9fafb, #f9fafb 5px, #f3f4f6 5px, #f3f4f6 10px)' }}>
-          <p className="text-[10px] font-bold text-gray-500 uppercase">Ô trống</p><h3 className="font-extrabold text-xl text-gray-500">{stats.empty}</h3>
-        </div>
-        <div className="bg-[#faf6f0] p-4 rounded-lg border border-[#e8dccb] shadow-sm text-center">
-          <p className="text-[10px] font-bold text-gray-500 uppercase">Môi trường</p>
-          <div className="flex justify-center gap-2 mt-1 text-xs font-bold"><Droplets className="w-3 h-3 text-blue-500"/>{currentBatch.ph} <Thermometer className="w-3 h-3 text-red-500 ml-1"/>{currentBatch.temp}</div>
+        <div className="op-stat"><div><span>Đang nuôi</span><strong className="text-xl text-[#7d4b1a]">{stats.occupied}</strong></div></div>
+        <div className="op-stat danger"><div><span>Cảnh báo</span><strong className="text-xl text-[#b42318]">{stats.alert}</strong></div></div>
+        <div className="op-stat"><div><span>Ô trống</span><strong className="text-xl">{stats.empty}</strong></div></div>
+        <div className="op-stat">
+          <div>
+            <span>Môi trường</span>
+            <strong className="text-sm flex items-center gap-2 mt-2">
+              <Droplets className="w-3 h-3 text-blue-500" />{currentBatch.ph}
+              <Thermometer className="w-3 h-3 text-red-500" />{currentBatch.temp}
+            </strong>
+          </div>
         </div>
       </div>
 
-      <div className="bg-[#faf6f0] p-6 rounded-lg border border-[#e8dccb] shadow-sm">
+      <OpPanel>
         <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-6">
-          {displayedBoxes.map(slot => (
-            <div key={slot.id} onClick={() => setSelectedBox(slot)} className={`aspect-square rounded flex flex-col items-center justify-center border-2 cursor-pointer transition-transform hover:scale-105 shadow-sm
-              ${slot.status === 'alert' ? 'bg-[#fca5a5] border-[#991b1b] text-[#7f1d1d]' : 
-                slot.status === 'empty' ? 'border-gray-300 text-gray-400 opacity-60' : 
-                'bg-[#f4cf9c] border-[#7d4b1a] text-[#5c3716]'}`}
-              style={slot.status === 'empty' ? { backgroundImage: 'repeating-linear-gradient(45deg, #ffffff, #ffffff 4px, #e5e7eb 4px, #e5e7eb 8px)' } : {}}
+          {displayedBoxes.map((slot) => (
+            <button
+              type="button"
+              key={slot.id}
+              onClick={() => setSelectedBox(slot)}
+              className={`aspect-square rounded-lg flex flex-col items-center justify-center border-2 transition-transform hover:scale-105
+                ${slot.status === 'alert' ? 'bg-[#fca5a5] border-[#991b1b] text-[#7f1d1d]' :
+                  slot.status === 'empty' ? 'border-gray-300 text-gray-400' : 'bg-[#f4cf9c] border-[#7d4b1a] text-[#5c3716]'}`}
+              style={slot.status === 'empty' ? { backgroundImage: 'repeating-linear-gradient(45deg,#ffffff,#ffffff 4px,#e5e7eb 4px,#e5e7eb 8px)' } : undefined}
             >
-              <span className={`text-[12px] font-extrabold ${slot.status === 'empty' ? 'bg-[#faf6f0] px-1' : ''}`}>{slot.id}</span>
-              {slot.status !== 'empty' && <span className="text-[10px] font-bold opacity-90 mt-0.5">{slot.weight}</span>}
-            </div>
+              <span className="text-[11px] font-extrabold">{slot.id}</span>
+              {slot.status !== 'empty' && <span className="text-[10px] font-bold mt-0.5">{slot.weight}</span>}
+            </button>
           ))}
         </div>
-
         {totalPages > 1 && (
-          <div className="flex items-center justify-between border-t border-[#f0e8dc] pt-5 mt-2">
-            <span className="text-sm text-gray-500 font-medium">
-              Đang hiển thị ô <strong className="text-[#171717]">{(page - 1) * BOXES_PER_PAGE + 1}</strong> đến <strong className="text-[#171717]">{Math.min(page * BOXES_PER_PAGE, currentBatch.totalBoxes)}</strong> / {currentBatch.totalBoxes}
+          <div className="flex items-center justify-between border-t border-[#f0e8dc] pt-5">
+            <span className="text-sm text-[#6f675e]">
+              Ô <strong>{(page - 1) * BOXES_PER_PAGE + 1}</strong>–<strong>{Math.min(page * BOXES_PER_PAGE, currentBatch.totalBoxes)}</strong> / {currentBatch.totalBoxes}
             </span>
             <div className="flex items-center gap-3">
-              <button disabled={page === 1} onClick={() => setPage((p: number) => p - 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-[#f4efe8]">
+              <button type="button" disabled={page === 1} onClick={() => setPage((p) => p - 1)} className="p-1.5 rounded-lg border border-[#e8dccb] disabled:opacity-30">
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <span className="text-sm font-extrabold text-[#7d4b1a] px-2">{page} <span className="text-gray-400">/</span> {totalPages}</span>
-              <button disabled={page === totalPages} onClick={() => setPage((p: number) => p + 1)} className="p-1.5 rounded border border-gray-300 text-gray-600 disabled:opacity-30 hover:bg-[#f4efe8]">
+              <span className="text-sm font-extrabold text-[#7d4b1a]">{page} / {totalPages}</span>
+              <button type="button" disabled={page === totalPages} onClick={() => setPage((p) => p + 1)} className="p-1.5 rounded-lg border border-[#e8dccb] disabled:opacity-30">
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>
         )}
-      </div>
+      </OpPanel>
 
-      {/* Box History Modal */}
       {selectedBox && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-          <div className="bg-[#faf6f0] rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
-            <div className="bg-[#171717] text-white p-4 flex justify-between items-center">
+        <div className="fixed inset-0 bg-black/60 grid place-items-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-[#faf6f0] rounded-2xl w-full max-w-md overflow-hidden shadow-2xl">
+            <div className="bg-[#171717] text-white p-4 flex justify-between items-start">
               <div>
-                <h3 className="font-extrabold text-lg">Chi tiết Ô nuôi: {selectedBox.id}</h3>
-                <p className="text-xs text-gray-400">Lô: {currentBatch.name}</p>
+                <h3 className="font-extrabold text-lg">Ô nuôi {selectedBox.id}</h3>
+                <p className="text-xs text-white/60">{currentBatch.name}</p>
               </div>
-              <button onClick={() => setSelectedBox(null)} className="text-gray-400 hover:text-white transition-colors"><X className="w-6 h-6" /></button>
+              <button type="button" onClick={() => setSelectedBox(null)}><X className="w-6 h-6" /></button>
             </div>
             <div className="p-6">
-              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-[#f0e8dc]">
-                <div className={`w-16 h-16 rounded-full flex flex-col items-center justify-center border-4 ${selectedBox.status === 'alert' ? 'border-[#991b1b] bg-[#fca5a5] text-[#7f1d1d]' : selectedBox.status === 'empty' ? 'border-[#e8dccb] bg-gray-100 text-gray-400' : 'border-[#7d4b1a] bg-[#f4cf9c] text-[#5c3716]'}`}>
-                  <span className="font-extrabold text-lg">{selectedBox.weight || '-'}</span>
+              <div className="flex items-center gap-4 mb-6 pb-5 border-b border-[#f0e8dc]">
+                <div className={`w-16 h-16 rounded-full grid place-items-center border-4 font-extrabold ${selectedBox.status === 'alert' ? 'border-[#991b1b] bg-[#fca5a5]' : selectedBox.status === 'empty' ? 'border-[#e8dccb] bg-gray-100' : 'border-[#7d4b1a] bg-[#f4cf9c]'}`}>
+                  {selectedBox.weight}
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 text-lg">Trạng thái hiện tại</h4>
-                  <p className={`text-sm font-bold ${selectedBox.status === 'alert' ? 'text-[#b42318]' : selectedBox.status === 'empty' ? 'text-gray-400' : 'text-[#15803d]'}`}>
-                    {selectedBox.status === 'alert' ? 'Có cảnh báo bất thường' : selectedBox.status === 'empty' ? 'Ô trống chưa thả giống' : 'Phát triển bình thường'}
-                  </p>
+                  <p className="font-bold">Trạng thái hiện tại</p>
+                  <OpBadge tone={selectedBox.status === 'alert' ? 'danger' : selectedBox.status === 'empty' ? 'mute' : 'ok'}>
+                    {selectedBox.status === 'alert' ? 'Cảnh báo bất thường' : selectedBox.status === 'empty' ? 'Ô trống' : 'Phát triển bình thường'}
+                  </OpBadge>
                 </div>
               </div>
-              
-              <h4 className="font-bold text-sm text-gray-500 uppercase tracking-wider mb-4">Lịch sử Log (Gần nhất)</h4>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <div className="text-xs text-gray-400 font-bold whitespace-nowrap pt-1">Hôm nay<br/>08:00</div>
-                  <div className="border-l-2 border-[#f4cf9c] pl-4">
-                    <p className="font-bold text-sm text-gray-800">Cập nhật môi trường & Hình ảnh</p>
-                    <p className="text-xs text-gray-600 mt-1">pH: {currentBatch.ph} | Nước: {currentBatch.temp}</p>
-                    {selectedBox.status !== 'empty' && <img src="https://images.unsplash.com/photo-1628198755051-789063de2d50?auto=format&fit=crop&q=80&w=150&h=150" alt="Crab" className="w-20 h-20 object-cover rounded mt-2 border border-[#e8dccb]" />}
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="text-xs text-gray-400 font-bold whitespace-nowrap pt-1">Hôm qua<br/>17:30</div>
-                  <div className="border-l-2 border-[#e8dccb] pl-4">
-                    <p className="font-bold text-sm text-gray-800">Cho ăn cữ chiều</p>
-                    <p className="text-xs text-gray-600 mt-1">Sử dụng cám viên sinh học (15g)</p>
-                  </div>
-                </div>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#6f675e] mb-3">Nhật ký gần nhất</p>
+              <div className="space-y-4 text-sm">
+                <p><strong>Hôm nay 08:00</strong> · pH {currentBatch.ph} · {currentBatch.temp}</p>
+                <p><strong>Hôm qua 17:30</strong> · Cho ăn cám viên 15g</p>
               </div>
-              
-              <button onClick={() => setSelectedBox(null)} className="w-full mt-8 py-3 bg-[#171717] hover:bg-[#333] text-white rounded font-bold text-sm transition-colors uppercase tracking-widest shadow-md">Đóng</button>
+              <OpBtn variant="ink" full className="mt-6" onClick={() => setSelectedBox(null)}>Đóng</OpBtn>
             </div>
           </div>
         </div>
       )}
     </OperatorLayout>
-  );
+  )
 }
